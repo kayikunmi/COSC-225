@@ -62,3 +62,9 @@ body{
       'picboxarea capboxarea';
 }
 
+.titlearea{
+    text-align: center;
+    font-size: larger;
+    color: darksalmon;
+}
+
