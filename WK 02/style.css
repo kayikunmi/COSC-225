@@ -7,11 +7,11 @@
     overflow: hidden;
 }
 
-.navbar a:hover {
+.navbar a:hover{
     color: coral;
 }
   
-.navbar a.active {
+.navbar a.active{
     color: crimson;
     font-size: larger;
 }
@@ -39,7 +39,26 @@ body{
 .contentspace{
     color: chocolate;
     margin-top: 5%;
-    margin-left: 3%;
-    margin-right: 3%;
+    margin-left: 5%;
+    margin-right: 5%;
     margin-bottom: 5%;
 }
+
+.picbox{ 
+    grid-area: picboxarea; 
+}
+
+.capbox{ 
+    margin-top: 15%;
+    font-size: larger;
+    grid-area: capboxarea; 
+}
+
+.piccap{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: auto;
+    grid-template-areas:
+      'picboxarea capboxarea';
+}
+
