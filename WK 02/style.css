@@ -1,11 +1,11 @@
 .navbar{
     background-color: bisque;
-    align-self: right;
+    align-self: center;
     text-align: center;
     font-size: 5vh;
     overflow: hidden;
     position: fixed; 
-    right: 35%;
+    right: 38%;
     z-index: 9;
 }
 
@@ -73,4 +73,9 @@ body{
 
 a:link{
     text-decoration: none;
+}
+
+img{
+    width:450px;
+    height:500px;
 }
