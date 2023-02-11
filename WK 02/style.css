@@ -1,12 +1,28 @@
 .navbar{
-    background-color: bisque;
+    left: 43%;
+    align-items: center;
     align-self: center;
-    text-align: center;
-    font-size: 5vh;
-    overflow: hidden;
-    position: fixed; 
-    right: 38%;
+    align-content: center;
+    font-size: 85%;
+    color: darksalmon;
+    position: fixed;   
     z-index: 9;
+}
+
+button{
+    background-color: bisque;
+    font-size: larger;
+}
+
+.whitebg{
+    background-color: white;
+    margin-left: 15%;
+    margin-right: 15%;
+    padding: 10px;
+    border: 10px;
+    align-self: center;
+    align-items: center;
+    width: 70vw;
 }
 
 .navbar a:hover{
@@ -21,13 +37,15 @@
 body{
     width: 100vw;
     background-color: rgba(106, 104, 104, 0.659);
+    align-items: center;
 }
 
-.whitebg{
+.whitebg2{
     background-color: white;
     margin-left: 15%;
     margin-right: 15%;
     margin-bottom: 15%;
+    align-items: center;
 }
 
 .indexAbout{
@@ -40,7 +58,7 @@ body{
 
 .contentspace{
     color: chocolate;
-    margin-top: 5%;
+    /* margin-top: 5%; */
     margin-left: 5%;
     margin-right: 5%;
     margin-bottom: 5%;
@@ -76,6 +94,6 @@ a:link{
 }
 
 img{
-    width:450px;
-    height:500px;
+    width:80%;
+    height:75%;
 }
