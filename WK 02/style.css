@@ -1,10 +1,12 @@
 .navbar{
-    /* position: fixed; */
     background-color: bisque;
     align-self: right;
     text-align: center;
     font-size: 5vh;
     overflow: hidden;
+    position: fixed; 
+    right: 35%;
+    z-index: 9;
 }
 
 .navbar a:hover{
@@ -42,6 +44,7 @@ body{
     margin-left: 5%;
     margin-right: 5%;
     margin-bottom: 5%;
+    position: relative;
 }
 
 .picbox{ 
@@ -64,7 +67,10 @@ body{
 
 .titlearea{
     text-align: center;
-    font-size: larger;
+    font-size: 190%;
     color: darksalmon;
 }
 
+a:link{
+    text-decoration: none;
+}
