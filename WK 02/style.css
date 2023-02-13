@@ -3,16 +3,13 @@
     align-items: center;
     align-self: center;
     align-content: center;
-    font-size: 85%;
+    font-size: 130%;
+    background-color: bisque;
     color: darksalmon;
     position: fixed;   
     z-index: 9;
 }
 
-button{
-    background-color: bisque;
-    font-size: larger;
-}
 
 .whitebg{
     background-color: white;
