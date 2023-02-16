@@ -1,9 +1,14 @@
-function sayHello(n) {
-    const helloElement = document.querySelector("#grid"); //this is the name of the grid
-    console.log("#hello");
-    for (let i = 1; i <= n; i++) {
-	    let para = document.createElement("p"); //crate paragraph elemt
-	    para.textContent = "Hello, World! " + i;
-	    helloElement.appendChild(para);
+function makeGrid(){
+    const gridrows = 10;
+    const gridcolumns= 10;
+    const grid = document.getElementById("grid");
+    for (let i = 0; i < gridrows; i++) {
+        let row = document.createElement("tr");
+        console.log(row + i);
+        for (let j = 0; j < gridcolumns; j++) {
+            let cell = document.createElement("td");
+            row.appendChild(cell);
+        }
+        grid.appendChild(row);
     }
 }
