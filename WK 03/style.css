@@ -3,8 +3,7 @@ body{
 }
 .pinkbox{
     background-color: rgb(255, 182, 182);
-    margin-left: 15%;
-    margin-right: 15%;
+    margin: auto;
     padding: 10px;
     border: 10px;
     align-self: center;
@@ -14,8 +13,7 @@ body{
 
 .whitebox{
     background-color: rgb(255, 255,255);
-    margin-left: 15%;
-    margin-right: 15%;
+    margin: auto;
     padding: 10px;
     border: 10px;
     align-self: center;
@@ -23,3 +21,8 @@ body{
     width: 50vw;
     height: 50vw;
 } 
+
+#canvas {
+    background: #fff;
+    margin: 20px;
+}
