@@ -27,7 +27,7 @@ body{
 
 #grid{
     margin: auto;
-    margin-top: 2%;
+    margin-top: 2.25%;
     align-self: center;
     text-align: center;
     width: 40vw;
@@ -41,5 +41,9 @@ td{
     width: 4vw;
     height: 4vw;
 }
+
+td:hover {
+    background: rgb(225,225,225)!important;
+  }
 
 
