@@ -13,10 +13,9 @@ function makeGrid(){
             console.log("idname: " + idname);
             color1 -=2.25;
             color2 +=2.25;
-            cell.style.backgroundColor = "rgb(230," + color2 + "," + color1; 
+            cell.style.backgroundColor = "rgb(230," + color2 + "," + color1;
             row.appendChild(cell);
-            
-         
+
         }
         grid.appendChild(row);
     }

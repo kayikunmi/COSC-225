@@ -1,12 +1,14 @@
 body{
     background-color: rgb(221, 221, 221); 
 }
+
 .pinkbox{
     background-color: rgb(255, 182, 182);
     margin: auto;
     align-self: center;
     text-align: center;
     width: 70vw;
+    height: 70vw;
 }
 
 .whitebox{
@@ -14,20 +16,30 @@ body{
     margin: auto;
     align-self: center;
     text-align: center;
-    width: 40vw;
+    width: 42vw;
+    height: 43.25vw;
 } 
+
+#space{
+    height: 0.25vw;
+    background-color: white;
+}
 
 #grid{
     margin: auto;
+    margin-top: 2%;
     align-self: center;
     text-align: center;
+    width: 40vw;
+    height: 40vw;
 }
 
 td{
     margin: auto;
-    border: 0.05px solid black;
+    border: 0.0005px solid black;
     padding: 0.05px;
     width: 4vw;
     height: 4vw;
- 
 }
+
+
