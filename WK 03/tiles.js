@@ -1,7 +1,6 @@
-// const red = Math.floor(Math.random() * 225) + 1;
-// const green = Math.floor(Math.random() * 225) + 1;
-// const blue = Math.floor(Math.random() * 225) + 1;
 function makeGrid(){
+    let color1 = 225;
+    let color2 = 0;
     const gridrows = 10;
     const gridcolumns= 10;
     const grid = document.getElementById("grid");
@@ -11,9 +10,12 @@ function makeGrid(){
             let cell = document.createElement("td");
             cell.setAttribute("id", "r" + i + "c" + j)
             let idname = cell.setAttribute("id", "r" + i + "c" + j)
-            cell.style.backgroundColor = "rgb(200,200,200)";
+            console.log("idname: " + idname);
+            color1 -=2.25;
+            color2 +=2.25;
+            cell.style.backgroundColor = "rgb(230," + color2 + "," + color1; 
             row.appendChild(cell);
-            console.log("name:" + idname);
+            
          
         }
         grid.appendChild(row);
