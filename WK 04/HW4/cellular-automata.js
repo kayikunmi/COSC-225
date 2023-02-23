@@ -1,17 +1,22 @@
+
+var nameInput = document.getElementById('number');
+if(nameInput != null){
+    document.querySelector('form.pure-form').addEventListener('submit', function (e) {
+        //prevent the normal submission of the form
+        e.preventDefault();
+        //console.log(nameInput.value);  
+        let decimal = nameInput.value;
+        let binary = Number(decimal).toString(2);
+        console.log("This is the input in decimal: " + decimal); 
+        console.log("This is the input in binary: " + binary);
+    });
+}
+
 function draw(){
-    var nameInput = document.getElementById('number');
-
-document.querySelector('form.pure-form').addEventListener('submit', function (e) {
-
-    //prevent the normal submission of the form
-    e.preventDefault();
-
-    console.log(nameInput.value);    
-});
     let color1 = 225;
     let color2 = 0;
-    const gridrows = 10;
-    const gridcolumns= 10;
+    const gridrows = 20;
+    const gridcolumns= 20;
     const table = document.getElementById("grid");
     for (let i = 1; i <= gridrows; i++) {
         let row = document.createElement("tr");
@@ -35,5 +40,8 @@ document.querySelector('form.pure-form').addEventListener('submit', function (e)
     }
 }
 ///
+function applyRule(config, rule){
+    //here we want to apply whatever rule we've created
+}
 
   
