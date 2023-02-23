@@ -1,17 +1,32 @@
 var decimal;
 var binary;
+var config = [];
 
 function getUserInput() {
   var nameInput = document.getElementById('number');
   if(nameInput != null){
     document.querySelector('form.pure-form').addEventListener('submit', function (e) {
-      //prevent the normal submission of the form
-      e.preventDefault();
-      decimal = nameInput.value;
-      binary = Number(decimal).toString(2);
-      console.log("works here");
-      console.log("This is the input in decimal: " + decimal); 
-      console.log("This is the input in binary: " + binary);
+        //prevent the normal submission of the form
+        e.preventDefault();
+        decimal = nameInput.value;
+        binary = Number(decimal).toString(2);
+        console.log("works here");
+        console.log("This is the input in decimal: " + decimal); 
+        console.log("This is the input in binary: " + binary);
+        
+        while (binary.length < 8) {
+            binary = "0" + binary;
+            console.log("here we are: " + binary);
+            console.log(binary.length);
+        }
+        
+          // add the values of binary to the config array
+          for (let i = 0; i < 8; i++) {
+            config.push(binary[i]);
+          }
+    
+          console.log("The binary values in the config array are: " + config);
+          console.log("config length: " + config.length);
     });
   }
 }
