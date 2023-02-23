@@ -1,16 +1,25 @@
+var decimal;
+var binary;
 
-var nameInput = document.getElementById('number');
-if(nameInput != null){
+function getUserInput() {
+  var nameInput = document.getElementById('number');
+  if(nameInput != null){
     document.querySelector('form.pure-form').addEventListener('submit', function (e) {
-        //prevent the normal submission of the form
-        e.preventDefault();
-        //console.log(nameInput.value);  
-        let decimal = nameInput.value;
-        let binary = Number(decimal).toString(2);
-        console.log("This is the input in decimal: " + decimal); 
-        console.log("This is the input in binary: " + binary);
+      //prevent the normal submission of the form
+      e.preventDefault();
+      decimal = nameInput.value;
+      binary = Number(decimal).toString(2);
+      console.log("works here");
+      console.log("This is the input in decimal: " + decimal); 
+      console.log("This is the input in binary: " + binary);
     });
+  }
 }
+
+// getUserInput();
+
+
+///
 
 function draw(){
     let color1 = 225;
