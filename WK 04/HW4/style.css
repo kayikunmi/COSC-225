@@ -1,0 +1,24 @@
+#headerstuff{
+    margin: auto;
+    margin-top: 2.25%;
+    align-self: center;
+    text-align: center;
+    font-size: xx-large;
+}
+
+#grid{
+    margin: auto;
+    margin-top: 2.25%;
+    align-self: center;
+    text-align: center;
+    width: 30vw;
+    height: 30vw;
+}
+
+td{
+    margin: auto;
+    border: 0.0005px solid black;
+    padding: 0.05px;
+    width: 3vw;
+    height: 3vw;
+}
