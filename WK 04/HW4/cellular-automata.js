@@ -7,17 +7,21 @@ function applyRule(config, rule) {
     for (let i = 0; i < n; i++) {
       // Get the left, center and right cells
       const left = config[(i + n - 1) % n];
+      //console.log("left of " + i + ": " + left);
       const center = config[i];
       const right = config[(i + 1) % n];
+      //console.log("right of " + i + ": " + right);
   
       // Calculate the sum of the left, center and right cells
       const sum = left * 4 + center * 2 + right;
   
       // Apply the rule to the sum and update the next configuration
       nextConfig[i] = (rule >> sum) & 1;
+      //console.log("nextConfig[i]: " + nextConfig[i]);
     }
   
     // Return the next configuration
+    //console.log("nextConfig = " + nextConfig);
     return nextConfig;
   }
   
@@ -47,7 +51,8 @@ function applyRule(config, rule) {
     config[numCols-1] =1;
     config[Math.floor(numCols / 2)] = 1;
   
-    // Loop through each row and column and generate the cellular automaton
+    // Loop through each row and column
+    // generate the cellular automaton
     for (let i = 0; i < numRows; i++) {
       const row = document.createElement('tr');
   
@@ -62,9 +67,11 @@ function applyRule(config, rule) {
         row.appendChild(cell);
       }
   
-      // Apply the rule to the current configuration and update the grid
+      // call applyRule to apply the rule to update the grid
       config = applyRule(config, rule);
       grid.appendChild(row);
     }
   });
+
+  module.exports = { applyRule };
   
