@@ -1,24 +1,65 @@
-#headerstuff{
+table{
+	border-collapse: collapse;
     margin: auto;
-    margin-top: 2.25%;
-    align-self: center;
-    text-align: center;
-    font-size: xx-large;
 }
 
-#grid{
+.alive{
+	background-color: black;
+}
+/*  */
+
+
+body{
+    background-color: rgb(221, 221, 221); 
+}
+
+.pinkbox{
+    background-color: rgb(255, 182, 182);
+    margin: auto;
+    align-self: center;
+    text-align: center;
+    width: 90vw;
+    height: 100vw;
+}
+
+.whitebox{
+    background-color: rgb(255, 255,255);
+    margin: auto;
+    align-self: center;
+    text-align: center;
+    width: 85vw;
+    height: 85vw;
+} 
+
+.space{
+    height: 0.75vw;
+    background-color: rgb(255, 182, 182);
+}
+
+#space{
+    height: 0.25vw;
+    background-color: white;
+}
+
+#gridspace{
     margin: auto;
     margin-top: 2.25%;
     align-self: center;
     text-align: center;
-    width: 60vw;
-    height: 60vw;
+    width: 80vw;
+    height: 80vw;
 }
 
 td{
     margin: auto;
     border: 0.0005px solid black;
     padding: 0.05px;
-    width: 3vw;
-    height: 3vw;
+    width: 0.5vw;
+    height: 0.5vw;
 }
+
+input{
+    width: 25vw;
+    text-align: center;
+}
+    
