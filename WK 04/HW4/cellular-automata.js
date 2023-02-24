@@ -14,21 +14,30 @@ function getUserInput() {
         console.log("This is the input in decimal: " + decimal); 
         console.log("This is the input in binary: " + binary);
         
+        //this pads binary if necessary
         while (binary.length < 8) {
             binary = "0" + binary;
-            console.log("here we are: " + binary);
-            console.log(binary.length);
+            // console.log("here we are: " + binary);
+            // console.log(binary.length);
+        }
+
+        //clears the array if necessary
+        while(config.length > 0) {
+            config.pop();
+            //console.log("poping config: " + config.length);
         }
         
-          // add the values of binary to the config array
-          for (let i = 0; i < 8; i++) {
+        
+        // add the values of binary to the config array
+        for (let i = 7; i >= 0; i--){
             config.push(binary[i]);
-          }
+        }
     
-          console.log("The binary values in the config array are: " + config);
-          console.log("config length: " + config.length);
+        console.log("The binary values in the config array are: " + config);
+        console.log("config length: " + config.length);
     });
   }
+  
 }
 
 // getUserInput();
@@ -68,4 +77,4 @@ function applyRule(config, rule){
     //here we want to apply whatever rule we've created
 }
 
-  
+ 
