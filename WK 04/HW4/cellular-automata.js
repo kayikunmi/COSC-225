@@ -21,7 +21,7 @@ function applyRule(config, rule){
   //console.log("nextConfig = " + nextConfig);
   return nextConfig;
 }
-/** */
+/**/
 let form = document.querySelector('form');
 let grid = document.querySelector('#grid');
   
