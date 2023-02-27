@@ -3,8 +3,8 @@ svg {
 }
 
 .dot {
-    r: 50px;
+    r: 10px;
     stroke: black;
-    fill: rgb(216, 140, 196);
+    fill: white;
     stroke-width: 2;
 }
