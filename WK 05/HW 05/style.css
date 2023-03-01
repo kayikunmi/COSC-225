@@ -1,0 +1,23 @@
+body{
+    background-color: pink;
+}
+
+h1{
+    text-align: center;
+}
+
+.space{
+    margin-top: 2%;
+}
+
+p{
+    width: 50vw;
+    margin: auto;
+}
+
+.whitebox{
+    margin: auto;
+    background-color: white;
+    width: 50vw;
+    height: 75vh;
+}
