@@ -1,0 +1,30 @@
+svg {
+    position: relative;
+    display: block;
+}
+
+.vertex {
+    r: 10px;
+    stroke: black;
+    fill: white;
+    stroke-width: 4;
+}
+
+.vertex:hover {
+    fill: rgb(200, 200, 255);
+}
+
+.edge {
+    stroke: black;
+    stroke-width: 4px;
+}
+
+.muted {
+    stroke: rgb(200,200,200);
+}
+
+.highlight {
+    stroke: red;
+    stroke-width: 5;
+}
+

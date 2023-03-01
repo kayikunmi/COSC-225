@@ -1,32 +1,55 @@
-const svg = document.getElementById("mySvg");
-const point1 = document.getElementById("point1");
-const point2 = document.getElementById("point2");
-let line;
+function drawLine() {
+  let ns = 'http://www.w3.org/2000/svg';
+  let svg = document.getElementById('my-svg');
+  let startPoint, endPoint, line;
 
-point1.addEventListener("click", handlePointClick);
-point2.addEventListener("click", handlePointClick);
+  svg.addEventListener('mousedown', function(event) {
+    // Get the position of the SVG element on the page
+    let svgRect = svg.getBoundingClientRect();
 
-function handlePointClick() {
-  const x1 = parseInt(this.getAttribute("cx"));
-  const y1 = parseInt(this.getAttribute("cy"));
-  
-  if (!line) {
-    // create the line element if it doesn't exist yet
-    line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-    line.setAttribute("stroke", "black");
-    line.setAttribute("stroke-width", "2");
+    // Set the start point of the line relative to the SVG element
+    startPoint = {
+      x: event.clientX - svgRect.left,
+      y: event.clientY - svgRect.top
+    };
+
+    // Create a new line element
+    line = document.createElementNS(ns, 'line');
+
+    // Set the starting position of the line
+    line.setAttribute('x1', startPoint.x);
+    line.setAttribute('y1', startPoint.y);
+
+    // Set the line color and width
+    line.setAttribute('stroke', 'green');
+    line.setAttribute('stroke-width', '2');
+
+    // Add the line to the SVG element
     svg.appendChild(line);
-  }
+
+    svg.addEventListener('mousemove', moveHandler);
+  });
+
+  function moveHandler(event) {
+    // Get the position of the whitebox div on the page
+    let whiteboxRect = document.getElementById('whitebox').getBoundingClientRect();
   
-  if (this === point1) {
-    // user clicked on point1, wait for click on point2
-    point2.addEventListener("click", handlePointClick);
-    line.setAttribute("x1", x1);
-    line.setAttribute("y1", y1);
-  } else {
-    // user clicked on point2, draw the line
-    point2.removeEventListener("click", handlePointClick);
-    line.setAttribute("x2", x1);
-    line.setAttribute("y2", y1);
-  }
+    // Set the end point of the line relative to the whitebox div
+    endPoint = {
+      x: event.clientX - whiteboxRect.left,
+      y: event.clientY - whiteboxRect.top
+    };
+  
+    // Set the ending position of the line
+    line.setAttribute('x2', endPoint.x);
+    line.setAttribute('y2', endPoint.y);
+  }  
+
+  svg.addEventListener('mouseup', function(event) {
+    svg.removeEventListener('mousemove', moveHandler);
+  });
+
+  svg.addEventListener('mouseleave', function(event) {
+    svg.removeEventListener('mousemove', moveHandler);
+  });
 }
