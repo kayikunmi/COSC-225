@@ -3,7 +3,9 @@ function drawLine() {
   let svg = document.getElementById('whitebox');
   let startPoint, endPoint, line;
 
-  svg.addEventListener('mousedown', function(event) {
+  svg.addEventListener('mousedown', startDrawing);
+
+  function startDrawing(event) {
     // Get the position of the SVG element on the page
     let svgRect = svg.getBoundingClientRect();
 
@@ -12,7 +14,6 @@ function drawLine() {
       x: event.clientX - svgRect.left,
       y: event.clientY - svgRect.top
     };
-    //console.log("StartPoint: " + startPoint);
 
     // Create a new line element
     line = document.createElementNS(ns, 'line');
@@ -23,34 +24,16 @@ function drawLine() {
 
     // Set the line color and width
     line.setAttribute('stroke', 'green');
-    line.setAttribute('stroke-width', '4');
+    line.setAttribute('stroke-width', '2');
 
     // Add the line to the SVG element
     svg.appendChild(line);
-    console.log("You drew a line");
 
-    svg.addEventListener('mouseup', function(event) {
-      // Get the position of the SVG element on the page
-      let svgRect = svg.getBoundingClientRect();
+    svg.addEventListener('mousemove', continueDrawing);
+    svg.addEventListener('mouseup', stopDrawing);
+  }
 
-      // Set the end point of the line relative to the SVG element
-      endPoint = {
-        x: event.clientX - svgRect.left,
-        y: event.clientY - svgRect.top
-      };
-
-      // Set the ending position of the line
-      line.setAttribute('x2', endPoint.x);
-      line.setAttribute('y2', endPoint.y);
-
-      svg.removeEventListener('mousemove', changeMove);
-      svg.removeEventListener('mouseup', arguments.callee);
-    });
-
-    svg.addEventListener('mousemove', changeMove);
-  });
-
-  function changeMove(event) {
+  function continueDrawing(event) {
     // Get the position of the SVG element on the page
     let svgRect = svg.getBoundingClientRect();
 
@@ -63,5 +46,10 @@ function drawLine() {
     // Set the ending position of the line
     line.setAttribute('x2', endPoint.x);
     line.setAttribute('y2', endPoint.y);
+  }
+
+  function stopDrawing(event) {
+    svg.removeEventListener('mousemove', continueDrawing);
+    svg.removeEventListener('mouseup', stopDrawing);
   }
 }
