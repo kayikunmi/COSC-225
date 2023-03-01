@@ -21,3 +21,11 @@ p{
     width: 50vw;
     height: 75vh;
 }
+
+#whitebox {
+    display: block;
+    margin: auto;
+    width: 60vw;
+    height: 75vh;
+  }
+

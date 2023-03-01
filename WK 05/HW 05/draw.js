@@ -1,6 +1,6 @@
 function drawLine() {
   let ns = 'http://www.w3.org/2000/svg';
-  let svg = document.getElementById('my-svg');
+  let svg = document.getElementById('whitebox');
   let startPoint, endPoint, line;
 
   svg.addEventListener('mousedown', function(event) {
@@ -27,29 +27,39 @@ function drawLine() {
     // Add the line to the SVG element
     svg.appendChild(line);
 
+    svg.addEventListener('mouseup', function(event) {
+      // Get the position of the SVG element on the page
+      let svgRect = svg.getBoundingClientRect();
+
+      // Set the end point of the line relative to the SVG element
+      endPoint = {
+        x: event.clientX - svgRect.left,
+        y: event.clientY - svgRect.top
+      };
+
+      // Set the ending position of the line
+      line.setAttribute('x2', endPoint.x);
+      line.setAttribute('y2', endPoint.y);
+
+      svg.removeEventListener('mousemove', moveHandler);
+      svg.removeEventListener('mouseup', arguments.callee);
+    });
+
     svg.addEventListener('mousemove', moveHandler);
   });
 
   function moveHandler(event) {
-    // Get the position of the whitebox div on the page
-    let whiteboxRect = document.getElementById('whitebox').getBoundingClientRect();
-  
-    // Set the end point of the line relative to the whitebox div
+    // Get the position of the SVG element on the page
+    let svgRect = svg.getBoundingClientRect();
+
+    // Set the end point of the line relative to the SVG element
     endPoint = {
-      x: event.clientX - whiteboxRect.left,
-      y: event.clientY - whiteboxRect.top
+      x: event.clientX - svgRect.left,
+      y: event.clientY - svgRect.top
     };
-  
+
     // Set the ending position of the line
     line.setAttribute('x2', endPoint.x);
     line.setAttribute('y2', endPoint.y);
-  }  
-
-  svg.addEventListener('mouseup', function(event) {
-    svg.removeEventListener('mousemove', moveHandler);
-  });
-
-  svg.addEventListener('mouseleave', function(event) {
-    svg.removeEventListener('mousemove', moveHandler);
-  });
+  }
 }

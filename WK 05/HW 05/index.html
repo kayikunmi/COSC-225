@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <title>Homweork 5</title>
@@ -12,16 +11,15 @@
         <h1>Drawing Canvas</h1>
         <p>Draw some shapes by clicking below</p>
     </div>
-    <div class="space"></div>
-    <div id="whitebox" class="whitebox">
-        <script src="draw.js"></script>
-        <script>
-        window.onload = function() {
-            drawLine();
-        }
-        </script>
-        <svg id="my-svg" width="100%" height="100%"></svg>
-    </div>
-</body>
+    <svg id="whitebox">
+        <rect x="0" y="0" width="100%" height="100%" fill="white" />
+    </svg>
 
+    <script src="draw.js"></script>
+    <script>
+        window.onload = function() {
+        drawLine();
+        }
+    </script>
+</body>
 </html>
