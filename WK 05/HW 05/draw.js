@@ -31,6 +31,7 @@ function drawLine() {
 
     svg.addEventListener('mousemove', continueDrawing);
     svg.addEventListener('mouseup', stopDrawing);
+    console.log("Called startDrawing");
   }
 
   function continueDrawing(event) {
@@ -46,10 +47,12 @@ function drawLine() {
     // Set the ending position of the line
     line.setAttribute('x2', endPoint.x);
     line.setAttribute('y2', endPoint.y);
+    console.log("Called continueDrawing");
   }
 
   function stopDrawing(event) {
     svg.removeEventListener('mousemove', continueDrawing);
     svg.removeEventListener('mouseup', stopDrawing);
+    console.log("Called stopDrawing");
   }
 }
