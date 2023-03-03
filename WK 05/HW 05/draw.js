@@ -1,16 +1,16 @@
-function drawLine() {
+function drawLine(){
   let ns = 'http://www.w3.org/2000/svg';
   let svg = document.getElementById('whitebox');
   let startPoint, endPoint, line;
 
   svg.addEventListener('mousedown', startDrawing);
 
-  function startDrawing(event) {
+  function startDrawing(event){
     // Get the position of the SVG element on the page
     let svgRect = svg.getBoundingClientRect();
 
     // Set the start point of the line relative to the SVG element
-    startPoint = {
+    startPoint ={
       x: event.clientX - svgRect.left,
       y: event.clientY - svgRect.top
     };
@@ -34,12 +34,12 @@ function drawLine() {
     console.log("Called startDrawing");
   }
 
-  function continueDrawing(event) {
+  function continueDrawing(event){
     // Get the position of the SVG element on the page
     let svgRect = svg.getBoundingClientRect();
 
     // Set the end point of the line relative to the SVG element
-    endPoint = {
+    endPoint ={
       x: event.clientX - svgRect.left,
       y: event.clientY - svgRect.top
     };
@@ -50,7 +50,7 @@ function drawLine() {
     console.log("Called continueDrawing");
   }
 
-  function stopDrawing(event) {
+  function stopDrawing(event){
     svg.removeEventListener('mousemove', continueDrawing);
     svg.removeEventListener('mouseup', stopDrawing);
     console.log("Called stopDrawing");
