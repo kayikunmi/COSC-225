@@ -3,7 +3,7 @@ function drawLine(){
   let svg = document.getElementById('whitebox');
   let startPoint, endPoint, line;
 
-  svg.addEventListener('mousedown', startDrawing);
+  svg.addEventListener('click', startDrawing);
 
   function startDrawing(event){
     let svgRect = svg.getBoundingClientRect();
@@ -24,7 +24,7 @@ function drawLine(){
 
     svg.appendChild(line);
     svg.addEventListener('mousemove', continueDrawing);
-    svg.addEventListener('mouseup', stopDrawing);
+    svg.addEventListener('click', stopDrawing);
     console.log("Called startDrawing");
   }
 
@@ -44,8 +44,24 @@ function drawLine(){
   }
 
   function stopDrawing(event){
+    let svgRect = svg.getBoundingClientRect();
+
+    // the end point has to be relative to the position of the box
+    endPoint ={
+      x: event.clientX - svgRect.left,
+      y: event.clientY - svgRect.top
+    };
+
+    // set the ending position of the line
+    line.setAttribute('x2', endPoint.x);
+    line.setAttribute('y2', endPoint.y);
+
     svg.removeEventListener('mousemove', continueDrawing);
-    svg.removeEventListener('mouseup', stopDrawing);
+    svg.removeEventListener('click', stopDrawing);
     console.log("Called stopDrawing");
+
+    // add click listener to start new line
+    line.addEventListener('click', startDrawing);
+    svg.removeChild(line);
   }
 }
