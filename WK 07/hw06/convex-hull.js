@@ -137,26 +137,28 @@ function ConvexHull (ps, viewer) {
     // perform a single step of the Graham scan algorithm performed on ps
     this.step = function () {
 	
-	// COMPLETE THIS METHOD
-    /* initialize a new stack
-    a = ps[i]
-    b = ps[i+1]
-    c = ps[i+2]
-    if(stack is empty){
-        push a and b
+	// COMPLETE THIS METHOD done
+    //initialize a new stack
+    let s = new Stack();
+    a = ps[i];
+    b = ps[i+1];
+    c = ps[i+2];
+    if(s.isEmpty()){
+        s.push(a);
+        s.push(b);
     }
-    else if (slope is false) and ps size is greater than 1){
-        pop from stack
-        b =a bc og a now b 
-        a = stack[staxk.lenght-2]
+    else if (slope == false && ps.size()> 1){
+        s.pop();
+        b = a;
+        a = s[s.length() -2];
     }
     else{
-        stack.pusch(c)//this is whenn its a right turn, so it works pretty much
-        a = b
-        b = c 
+        s.push(c); //this is whenn its a right turn, so it works pretty much
+        a = b;
+        b = c;
     }
         
-    */
+
 	
     }
 
@@ -169,58 +171,93 @@ function ConvexHull (ps, viewer) {
     // ties by minimum y-value.
     this.getConvexHull = function () {
 
-	// COMPLETE THIS METHOD
-    console.log("ps: " + ps.toString);
-    ps.sort;
-    let s = new Stack();
-    //create two stacks
-    /*
-    this.slope(abc)= 
-    make the function a boolean, positive if its a right turn, neg if left
-    call the fuction
-    now start inside this function
-    initialize point a as ps[0] and b as ps[1]
-    push a and b into upper stack
-
-    make a for loop that traverses through from 2 ps
-    initialize c in the loop as ps[i]
-    if stack.size = 1, psuch c into stack
-    else{
-        while(slope is false) and ps size is greater than 1){
-            pop from stack
-            b =a bc og a now b 
-            a = stack[staxk.lenght-2]
+	    // COMPLETE THIS METHOD done
+        console.log("ps: " + ps.toString);
+        ps.sort();
+        //create two stacks
+        let us = new Stack();
+        let ls = new Stack();
+    
+        // this.slope(abc)= 
+        // make the function a boolean, positive if its a right turn, neg if left
+        // call the fuction
+        this.slope = function (a,b,c) {
+            let val = (b.y - a.y) * (c.x - b.x) - (b.x - a.x) * (c.y - b.y);
+            if(val>0)
+            {
+                return true;
+            }
+            else{
+                return false;
+            }
         }
-        stack.pusch(c)//this is whenn its a right turn, so it works pretty much
-        a = b
-        b = c
 
-    }
-    outside for loop pop from the stack bc it will be a repeated point
-    ps.reverse;
-    basically repeat everything to stack two
-    outside the second for loop for loop, make a new point set that contains both stacks
-    yoiu might need two for loops for this, just raverse through both statcs and push start with upper hull 
-    then return ch, which is your new point set
-    */
+        // now start inside this function
+        // initialize point a as ps[0] and b as ps[1]
+        // push a and b into upper stack
+        let a = ps[0];
+        let b = ps[1];
+        us.push(a);
+        us.push(b);
 
-    // for(let i=0; i>ps.size(); i++){
-    //     let p1 = ps[i];
-    //     let p2 = ps[i+1];
-    //     let p3 = ps[i+2];
-    
-    //     s.push(p1);
-    //     let val = (p2.y - p1.y) * (p3.x - p2.x) - (p2.x - p1.x) * (p3.y - p2.y);
-    
-    //     if (val >= 0){
-    //     //this is going right
-    //     s.push(p2); 
-    //     }
-    //     else{
-    //         p2 = p3;
-    //         p3 = ps[2];
-    //     }
-    // }
-	
+        // make a for loop that traverses through from 2 ps
+        for(let i = 2; i < ps.size(); i ++){
+            //initialize c in the loop as ps[i]
+            let c = ps[i];
+            //if stack.size = 1, psuch c into stack
+            if (us.size() == 1){
+                us.push(c);
+            }
+            else{
+                //while(slope is false) and ps size is greater than 1){
+                while(this.slope(a,b,c) == false){
+                    us.pop();
+                    b = a;
+                    a = us[us.size() -2];
+                }
+                us.pusch(c)//this is whenn its a right turn, so it works pretty much
+                a = b;
+                b = c;
+            }
+        }
+        us.pop();
+
+        ps.reverse();
+        a = ps[0];
+        b = ps[1];
+        ls.push(a);
+        ls.push(b);
+
+        // make a for loop that traverses through from 2 ps
+        for(let i = 2; i < ps.size(); i ++){
+            //initialize c in the loop as ps[i]
+            let c = ps[i];
+            //if stack.size = 1, psuch c into stack
+            if (ls.size() == 1){
+                ls.push(c);
+            }
+            else{
+                //while(slope is false) and ps size is greater than 1){
+                while(this.slope(a,b,c) == false){
+                    ls.pop();
+                    b = a;
+                    a = ls[ls.size() -2];
+                }
+                ls.pusch(c)//this is when its a right turn, so it works pretty much
+                a = b;
+                b = c;
+            }
+        }
+
+        // outside the second for loop for loop, make a new point set that contains both stacks
+        let nps = new PointSet();
+        for(let i = 0; i < us.size(); i ++){
+            nps.push(us[i]);
+        }
+        for(let i = 0; i < ls.size(); i ++){
+            nps.push(ls[i]);
+        }
+        return nps;
+        
     }
 }
