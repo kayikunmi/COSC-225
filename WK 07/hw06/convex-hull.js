@@ -131,8 +131,6 @@ function ConvexHull (ps, viewer) {
 	
 	// COMPLETE THIS METHOD
     
-    //how does my code know what p1, p2,p3 are?
-    //
 	
     }
 
@@ -140,6 +138,25 @@ function ConvexHull (ps, viewer) {
     this.step = function () {
 	
 	// COMPLETE THIS METHOD
+    /* initialize a new stack
+    a = ps[i]
+    b = ps[i+1]
+    c = ps[i+2]
+    if(stack is empty){
+        push a and b
+    }
+    else if (slope is false) and ps size is greater than 1){
+        pop from stack
+        b =a bc og a now b 
+        a = stack[staxk.lenght-2]
+    }
+    else{
+        stack.pusch(c)//this is whenn its a right turn, so it works pretty much
+        a = b
+        b = c 
+    }
+        
+    */
 	
     }
 
@@ -184,7 +201,9 @@ function ConvexHull (ps, viewer) {
     basically repeat everything to stack two
     outside the second for loop for loop, make a new point set that contains both stacks
     yoiu might need two for loops for this, just raverse through both statcs and push start with upper hull 
+    then return ch, which is your new point set
     */
+
     // for(let i=0; i>ps.size(); i++){
     //     let p1 = ps[i];
     //     let p2 = ps[i+1];
