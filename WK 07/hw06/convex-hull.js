@@ -130,6 +130,9 @@ function ConvexHull (ps, viewer) {
     this.start = function () {
 	
 	// COMPLETE THIS METHOD
+    
+    //how does my code know what p1, p2,p3 are?
+    //
 	
     }
 
@@ -150,6 +153,55 @@ function ConvexHull (ps, viewer) {
     this.getConvexHull = function () {
 
 	// COMPLETE THIS METHOD
+    console.log("ps: " + ps.toString);
+    ps.sort;
+    let s = new Stack();
+    //create two stacks
+    /*
+    this.slope(abc)= 
+    make the function a boolean, positive if its a right turn, neg if left
+    call the fuction
+    now start inside this function
+    initialize point a as ps[0] and b as ps[1]
+    push a and b into upper stack
+
+    make a for loop that traverses through from 2 ps
+    initialize c in the loop as ps[i]
+    if stack.size = 1, psuch c into stack
+    else{
+        while(slope is false) and ps size is greater than 1){
+            pop from stack
+            b =a bc og a now b 
+            a = stack[staxk.lenght-2]
+        }
+        stack.pusch(c)//this is whenn its a right turn, so it works pretty much
+        a = b
+        b = c
+
+    }
+    outside for loop pop from the stack bc it will be a repeated point
+    ps.reverse;
+    basically repeat everything to stack two
+    outside the second for loop for loop, make a new point set that contains both stacks
+    yoiu might need two for loops for this, just raverse through both statcs and push start with upper hull 
+    */
+    // for(let i=0; i>ps.size(); i++){
+    //     let p1 = ps[i];
+    //     let p2 = ps[i+1];
+    //     let p3 = ps[i+2];
+    
+    //     s.push(p1);
+    //     let val = (p2.y - p1.y) * (p3.x - p2.x) - (p2.x - p1.x) * (p3.y - p2.y);
+    
+    //     if (val >= 0){
+    //     //this is going right
+    //     s.push(p2); 
+    //     }
+    //     else{
+    //         p2 = p3;
+    //         p3 = ps[2];
+    //     }
+    // }
 	
     }
 }
