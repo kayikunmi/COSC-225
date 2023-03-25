@@ -139,7 +139,7 @@ function ConvexHull (ps, viewer) {
 	
 	// COMPLETE THIS METHOD done
     //initialize a new stack
-    let s = new Stack();
+    let s = [];
     a = ps[i];
     b = ps[i+1];
     c = ps[i+2];
@@ -147,7 +147,7 @@ function ConvexHull (ps, viewer) {
         s.push(a);
         s.push(b);
     }
-    else if (slope == false && ps.size()> 1){
+    else if (slope == false && ps.size> 1){
         s.pop();
         b = a;
         a = s[s.length() -2];
@@ -175,8 +175,8 @@ function ConvexHull (ps, viewer) {
         console.log("ps: " + ps.toString);
         ps.sort();
         //create two stacks
-        let us = new Stack();
-        let ls = new Stack();
+        let us = [];
+        let ls = [];
     
         // this.slope(abc)= 
         // make the function a boolean, positive if its a right turn, neg if left
@@ -201,11 +201,11 @@ function ConvexHull (ps, viewer) {
         us.push(b);
 
         // make a for loop that traverses through from 2 ps
-        for(let i = 2; i < ps.size(); i ++){
+        for(let i = 2; i < ps.size; i ++){
             //initialize c in the loop as ps[i]
             let c = ps[i];
             //if stack.size = 1, psuch c into stack
-            if (us.size() == 1){
+            if (us.size == 1){
                 us.push(c);
             }
             else{
@@ -213,7 +213,7 @@ function ConvexHull (ps, viewer) {
                 while(this.slope(a,b,c) == false){
                     us.pop();
                     b = a;
-                    a = us[us.size() -2];
+                    a = us[us.size -2];
                 }
                 us.pusch(c)//this is whenn its a right turn, so it works pretty much
                 a = b;
@@ -229,11 +229,11 @@ function ConvexHull (ps, viewer) {
         ls.push(b);
 
         // make a for loop that traverses through from 2 ps
-        for(let i = 2; i < ps.size(); i ++){
+        for(let i = 2; i < ps.size; i ++){
             //initialize c in the loop as ps[i]
             let c = ps[i];
             //if stack.size = 1, psuch c into stack
-            if (ls.size() == 1){
+            if (ls.size == 1){
                 ls.push(c);
             }
             else{
@@ -241,7 +241,7 @@ function ConvexHull (ps, viewer) {
                 while(this.slope(a,b,c) == false){
                     ls.pop();
                     b = a;
-                    a = ls[ls.size() -2];
+                    a = ls[ls.size -2];
                 }
                 ls.pusch(c)//this is when its a right turn, so it works pretty much
                 a = b;
@@ -251,10 +251,10 @@ function ConvexHull (ps, viewer) {
 
         // outside the second for loop for loop, make a new point set that contains both stacks
         let nps = new PointSet();
-        for(let i = 0; i < us.size(); i ++){
+        for(let i = 0; i < us.size; i ++){
             nps.push(us[i]);
         }
-        for(let i = 0; i < ls.size(); i ++){
+        for(let i = 0; i < ls.size; i ++){
             nps.push(ls[i]);
         }
         return nps;
