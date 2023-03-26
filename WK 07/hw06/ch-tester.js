@@ -78,9 +78,10 @@ function runTests() {
 	
 	if (expectedOutput != actualOutput) {
             console.log(`Test failed\n` +
-			`  input: ${input}\n` +
-			`  expected output: ${expectedOutput}` +
-			`  actual output: ${actualOutput}`);
+			`\ninput: ${input}\n` +
+			`\nexpected output: ${expectedOutput}` +
+			`\nactual output: ${actualOutput}` + 
+            '\n');
             if (++errorCounter >= 5) {
 		console.log("You have failed 5 test cases. The tester will now terminate.");
             }

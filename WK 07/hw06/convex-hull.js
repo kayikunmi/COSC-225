@@ -144,11 +144,39 @@ function ConvexHull (ps, viewer) {
 
     // start a visualization of the Graham scan algorithm performed on ps
     this.start = function () {
-	
-	// COMPLETE THIS METHOD
-    
-	
+        // Step 1: Sort the points in ps according to their x-coordinates
+        ps.sort();
+
+        // Step 2: Find the lower and upper hulls
+        let lowerHull = [ps.points[0], ps.points[1]];
+        for (let i = 2; i < ps.size(); i++) {
+            lowerHull.push(ps.points[i]);
+            while (lowerHull.length > 2 && this.slope(lowerHull[lowerHull.length - 3], lowerHull[lowerHull.length - 2], lowerHull[lowerHull.length - 1])) {
+                lowerHull.splice(lowerHull.length - 2, 1);
+            }
+        }
+        let upperHull = [ps.points[ps.size() - 1], ps.points[ps.size() - 2]];
+        for (let i = ps.size() - 3; i >= 0; i--) {
+            upperHull.push(ps.points[i]);
+            while (upperHull.length > 2 && this.slope(upperHull[upperHull.length - 3], upperHull[upperHull.length - 2], upperHull[upperHull.length - 1])) {
+                upperHull.splice(upperHull.length - 2, 1);
+            }
+        }
+        upperHull.reverse();
+
+        // Step 3: Combine the lower and upper hulls to get the convex hull
+        let convexHull = lowerHull.concat(upperHull.slice(1, upperHull.length - 1));
+
+        // Step 4: Display the convex hull
+        this.viewer.clear();
+        let coords = convexHull.map(function (p) { return p.x + "," + p.y }).join(" ");
+        let poly = document.createElementNS(SVG_NS, "polygon");
+        poly.setAttribute("points", coords);
+        poly.setAttribute("stroke", "black");
+        poly.setAttribute("fill", "none");
+        this.viewer.svg.appendChild(poly);
     }
+
 
     // perform a single step of the Graham scan algorithm performed on ps
     this.step = function () {
@@ -183,86 +211,48 @@ function ConvexHull (ps, viewer) {
     // in clockwise order, starting from the left-most point, breaking
     // ties by minimum y-value.
     this.getConvexHull = function () {
-
-	    // COMPLETE THIS METHOD done
-        console.log("ps: " + ps.toString());
-        ps.sort();
-        //create two stacks
-        let us = [];
-        let ls = [];
+        let points = this.ps.points;
+        let n = points.length;
+        if (n < 3) {
+            return new PointSet(points.slice());
+        }
     
-        // this.slope(abc)= 
-        // make the function a boolean, positive if its a right turn, neg if left
-        // call the fuction
-    
-
-        // now start inside this function
-        // initialize point a as ps.points[0] and b as ps.points[1]
-        // push a and b into upper stack
-        let a = ps.points[0];
-        let b = ps.points[1];
-        us.push(a);
-        us.push(b);
-
-        // make a for loop that traverses through from 2 ps
-        for(let i = 2; i < ps.size(); i ++){
-            //initialize c in the loop as ps.points[i]
-            let c = ps.points[i];
-            //if stack.size = 1, psuch c into stack
-            if (us.size == 1){
-                us.push(c);
-            }
-            else{
-                //while(slope is false) and ps size is greater than 1){
-                while(this.slope(a,b,c) == false){
-                    us.pop();
-                    b = a;
-                    a = us[us.size -2];
-                }
-                us.push(c)//this is when its a right turn, so it works pretty much
-                a = b;
-                b = c;
-            }
-        }
-        us.pop();
-
-        ps.reverse();
-        a = ps.points[0];
-        b = ps.points[1];
-        ls.push(a);
-        ls.push(b);
-
-        // make a for loop that traverses through from 2 ps
-        for(let i = 2; i < ps.size(); i ++){
-            //initialize c in the loop as ps.points[i]
-            let c = ps.points[i];
-            //if stack.size = 1, psuch c into stack
-            if (ls.size == 1){
-                ls.push(c);
-            }
-            else{
-                //while(slope is false) and ps size is greater than 1){
-                while(this.slope(a,b,c) == false){
-                    ls.pop();
-                    b = a;
-                    a = ls[ls.size -2];
-                }
-                ls.push(c)//this is when its a right turn, so it works pretty much
-                a = b;
-                b = c;
-            }
-        }
-
-        // outside the second for loop for loop, make a new point set that contains both stacks
-        let nps = new PointSet();
-        for(let i = 0; i < us.size; i ++){
-            nps.points.push(us[i]);
-        }
-        for(let i = 0; i < ls.size; i ++){
-            nps.points.push(ls[i]);
-        }
-        return nps;
+        // Sort points lexicographically (by x, then y)
+        this.ps.sort();
         
+        let hull = [];
+        let idx = 0;
+    
+        // Compute the lower hull
+        for (let i = 0; i < n; i++) {
+            while (idx >= 2 && this.crossProduct(hull[idx - 2], hull[idx - 1], points[i]) <= 0) {
+                hull.pop();
+                idx--;
+            }
+            hull.push(points[i]);
+            idx++;
+        }
+    
+        // Compute the upper hull
+        for (let i = n - 2, t = idx + 1; i >= 0; i--) {
+            while (idx >= t && this.crossProduct(hull[idx - 2], hull[idx - 1], points[i]) <= 0) {
+                hull.pop();
+                idx--;
+            }
+            hull.push(points[i]);
+            idx++;
+        }
+    
+        hull.pop();  // remove the last point which is the same as the first point
+        return new PointSet(hull);
+    }
+    
+    // Compute the cross product of the vectors (p1, p2) and (p2, p3)
+    this.crossProduct = function (p1, p2, p3) {
+        let x1 = p1.x, y1 = p1.y;
+        let x2 = p2.x, y2 = p2.y;
+        let x3 = p3.x, y3 = p3.y;
+        return (x2 - x1) * (y3 - y2) - (y2 - y1) * (x3 - x2);
     }
 }
 try {
