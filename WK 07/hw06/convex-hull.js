@@ -123,39 +123,7 @@ function ConvexHullViewer (svg, ps){
     this.svg = svg;  // an SVG object where the visualization is drawn
     this.ps = ps;    // a PointSet of the points to be visualized
 
-    // create an SVG canvas with appropriate dimensions
-    svg.setAttributeNS(null, "width", SVG_WIDTH);
-    svg.setAttributeNS(null, "height", SVG_HEIGHT);
-
-    // draw the points from the PointSet ps
-    for (let pt of ps.points){
-        let circle = document.createElementNS(SVG_NS, "circle");
-        circle.setAttributeNS(null, "cx", pt.x);
-        circle.setAttributeNS(null, "cy", pt.y);
-        circle.setAttributeNS(null, "r", 5);
-        circle.setAttributeNS(null, "fill", "black");
-        svg.appendChild(circle);
-    }
-
-    // set up the step button
-    let stepButton = document.createElement("button");
-    stepButton.textContent = "Step";
-    document.body.appendChild(stepButton);
-
-    // add an event listener to the step button to visualize each step of the algorithm
-    let i = 0;
-    stepButton.addEventListener("click", () =>{
-        if (i < ps.points.length){
-            // visualize the next step of the algorithm
-            let circle = document.createElementNS(SVG_NS, "circle");
-            circle.setAttributeNS(null, "cx", ps.points[i].x);
-            circle.setAttributeNS(null, "cy", ps.points[i].y);
-            circle.setAttributeNS(null, "r", 5);
-            circle.setAttributeNS(null, "fill", "red");
-            svg.appendChild(circle);
-            i++;
-        }
-    });
+    // COMPLETE THIS OBJECT
 }
 
 
