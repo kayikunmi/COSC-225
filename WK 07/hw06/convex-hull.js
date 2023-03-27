@@ -127,20 +127,11 @@ function ConvexHull (ps, viewer) {
     this.viewer = viewer;  // a ConvexHullViewer for this visualization
 
     let s = [];
-    a = ps.points[0];
-    b = ps.points[1];
-    c = ps.points[2];
+    ps.sort();  // sort the points in ps
+    let a = ps.points[0];  // the point with the smallest x-coordinate
+    let b = ps.points[1];  // the second point with the smallest x-coordinate
+    let c = ps.points[2];  // the third point with the smallest x-coordinate
 
-    this.slope = function (a,b,c) {
-        let val = (b.y - a.y) * (c.getXCoords - b.getXCoords) - (b.getXCoords - a.getXCoords) * (c.getYCoords - b.getYCoords);
-        if(val>0)
-        {
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
 
     // start a visualization of the Graham scan algorithm performed on ps
     this.start = function () {
@@ -150,13 +141,12 @@ function ConvexHull (ps, viewer) {
     this.step = function () {
 	
 	// COMPLETE THIS METHOD done
-    //initialize a new stack
 
     if(s.length==0){
         s.push(a);
         s.push(b);
     }
-    else if (slope == false && ps.size()> 1){
+    else if (cross(a,b,c) <=0 && ps.size()> 1){
         s.pop();
         b = a;
         a = s[s.length -2];
