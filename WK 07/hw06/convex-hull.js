@@ -132,7 +132,7 @@ function ConvexHull (ps, viewer) {
     c = ps.points[2];
 
     this.slope = function (a,b,c) {
-        let val = (b.y - a.y) * (c.x - b.x) - (b.x - a.x) * (c.y - b.y);
+        let val = (b.y - a.y) * (c.getXCoords - b.getXCoords) - (b.getXCoords - a.getXCoords) * (c.getYCoords - b.getYCoords);
         if(val>0)
         {
             return true;
@@ -144,47 +144,15 @@ function ConvexHull (ps, viewer) {
 
     // start a visualization of the Graham scan algorithm performed on ps
     this.start = function () {
-        // Step 1: Sort the points in ps according to their x-coordinates
-        ps.sort();
-
-        // Step 2: Find the lower and upper hulls
-        let lowerHull = [ps.points[0], ps.points[1]];
-        for (let i = 2; i < ps.size(); i++) {
-            lowerHull.push(ps.points[i]);
-            while (lowerHull.length > 2 && this.slope(lowerHull[lowerHull.length - 3], lowerHull[lowerHull.length - 2], lowerHull[lowerHull.length - 1])) {
-                lowerHull.splice(lowerHull.length - 2, 1);
-            }
-        }
-        let upperHull = [ps.points[ps.size() - 1], ps.points[ps.size() - 2]];
-        for (let i = ps.size() - 3; i >= 0; i--) {
-            upperHull.push(ps.points[i]);
-            while (upperHull.length > 2 && this.slope(upperHull[upperHull.length - 3], upperHull[upperHull.length - 2], upperHull[upperHull.length - 1])) {
-                upperHull.splice(upperHull.length - 2, 1);
-            }
-        }
-        upperHull.reverse();
-
-        // Step 3: Combine the lower and upper hulls to get the convex hull
-        let convexHull = lowerHull.concat(upperHull.slice(1, upperHull.length - 1));
-
-        // Step 4: Display the convex hull
-        this.viewer.clear();
-        let coords = convexHull.map(function (p) { return p.x + "," + p.y }).join(" ");
-        let poly = document.createElementNS(SVG_NS, "polygon");
-        poly.setAttribute("points", coords);
-        poly.setAttribute("stroke", "black");
-        poly.setAttribute("fill", "none");
-        this.viewer.svg.appendChild(poly);
+        //COmplete this
     }
 
-
-    // perform a single step of the Graham scan algorithm performed on ps
     this.step = function () {
 	
 	// COMPLETE THIS METHOD done
     //initialize a new stack
 
-    if(s.isEmpty()){
+    if(s.length==0){
         s.push(a);
         s.push(b);
     }
@@ -211,49 +179,54 @@ function ConvexHull (ps, viewer) {
     // in clockwise order, starting from the left-most point, breaking
     // ties by minimum y-value.
     this.getConvexHull = function () {
-        let points = this.ps.points;
-        let n = points.length;
-        if (n < 3) {
-            return new PointSet(points.slice());
-        }
-    
-        // Sort points lexicographically (by x, then y)
-        this.ps.sort();
-        
-        let hull = [];
-        let idx = 0;
-    
-        // Compute the lower hull
-        for (let i = 0; i < n; i++) {
-            while (idx >= 2 && this.crossProduct(hull[idx - 2], hull[idx - 1], points[i]) <= 0) {
-                hull.pop();
-                idx--;
+        // Make a copy of the input points and sort them lexicographically.
+        let sortedPoints = this.ps.points.slice();
+        sortedPoints.sort((a, b) => {
+            if (a.x !== b.x) {
+                return a.x - b.x;
+            } else {
+                return a.y - b.y;
             }
-            hull.push(points[i]);
-            idx++;
-        }
-    
-        // Compute the upper hull
-        for (let i = n - 2, t = idx + 1; i >= 0; i--) {
-            while (idx >= t && this.crossProduct(hull[idx - 2], hull[idx - 1], points[i]) <= 0) {
-                hull.pop();
-                idx--;
+        });
+
+        // Find the lower hull.
+        let lowerHull = [];
+        for (let i = 0; i < sortedPoints.length; i++) {
+            while (lowerHull.length >= 2 &&
+                   cross(lowerHull[lowerHull.length - 2], lowerHull[lowerHull.length - 1], sortedPoints[i]) <= 0) {
+                lowerHull.pop();
             }
-            hull.push(points[i]);
-            idx++;
+            lowerHull.push(sortedPoints[i]);
         }
-    
-        hull.pop();  // remove the last point which is the same as the first point
-        return new PointSet(hull);
+
+        // Find the upper hull.
+        let upperHull = [];
+        for (let i = sortedPoints.length - 1; i >= 0; i--) {
+            while (upperHull.length >= 2 &&
+                   cross(upperHull[upperHull.length - 2], upperHull[upperHull.length - 1], sortedPoints[i]) <= 0) {
+                upperHull.pop();
+            }
+            upperHull.push(sortedPoints[i]);
+        }
+
+        // Remove the first and last points of the upper hull (they are also in the lower hull).
+        //upperHull.shift();
+        lowerHull.pop();
+        upperHull.reverse();
+        lowerHull.reverse();
+
+        // Concatenate the lower hull and the upper hull to form the convex hull.
+        let convexHull = new PointSet();
+        convexHull.points = upperHull.concat(lowerHull);
+
+        return convexHull;
     }
-    
-    // Compute the cross product of the vectors (p1, p2) and (p2, p3)
-    this.crossProduct = function (p1, p2, p3) {
-        let x1 = p1.x, y1 = p1.y;
-        let x2 = p2.x, y2 = p2.y;
-        let x3 = p3.x, y3 = p3.y;
-        return (x2 - x1) * (y3 - y2) - (y2 - y1) * (x3 - x2);
-    }
+
+}
+
+// Compute the cross product of the vectors (p1 -> p2) and (p2 -> p3).
+function cross(p1, p2, p3) {
+    return (p2.x - p1.x) * (p3.y - p2.y) - (p3.x - p2.x) * (p2.y - p1.y);
 }
 try {
     exports.PointSet = PointSet;
