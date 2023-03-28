@@ -1,19 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <title>Homework 06</title>
-    <link rel="stylesheet" href="style.css" type="text/css"/>
+    <meta charset="utf-8" />
+    <title>Assignment 6</title>
+    <link rel="stylesheet" href="style.css" type="text/css" />
     <script src="convex-hull.js" defer></script>
     <!-- uncomment this line to test your program: -->
     <!-- <script src="ch-tester.js" defer></script> -->
   </head>
   <body>
     <div id="root">
-      <h1>Title Your Page</h1>
-      <p>Make a description here</p>
-      <svg id="convex-hull-box" xmlns="http://www.w3.org/2000/svg" width="600" height="400">
+      <h1>Convex Hull</h1>
+      <p>
+        This is an interactive visualization of Graham's scan algorithm for
+        computing the convex hull of a set of points in a plane. You can specify
+        an instance by clicking to add points to the set and go step by step
+        through an execution of the algorithm.
+      </p>
+      <svg
+        id="convex-hull-box"
+        xmlns="http://www.w3.org/2000/svg"
+        width="600"
+        height="400">
+        <rect width="100%" height="100%" fill="gray"></rect>
       </svg>
+      <button onclick="inst.start()">Start DFS</button> <button onclick="inst.step()">DFS Step</button> <button onclick="ConvexHull.animate()">Animate DFS</button>
     </div>
   </body>
 </html>

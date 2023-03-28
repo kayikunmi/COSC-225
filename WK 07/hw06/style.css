@@ -1,1 +1,20 @@
 /* Add Your Styles Here! */
+svg{
+    border: 10px solid black;
+    position: relative;
+  }
+  
+  .dot {
+    r: 10px;
+    stroke: black;
+    fill: white;
+    stroke-width: 2;
+  }
+  .line{
+    stroke: black;
+    stroke-width: 5;
+  }
+  .removed{
+    stroke: gray;
+    stroke-width: 5;
+  }
