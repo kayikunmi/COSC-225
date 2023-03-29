@@ -150,24 +150,28 @@ function ConvexHullViewer(svg, ps) {
     console.log("You clicked this dot " + dot.id);
   }
 
-  this.addLine = function (line) {
-    const a = line.a;
-    const b = line.b;
-    const draw = document.createElementNS(SVG_NS, "line");
-    draw.setAttributeNS(null, "x1", a.x); //set its points
-    draw.setAttributeNS(null, "y1", a.y);
-    draw.setAttributeNS(null, "x2", b.x);
-    draw.setAttributeNS(null, "y2", b.y);
-    draw.classList.add("line");
-    line.id = this.nextLineID;
-    this.nextLineID++;
-    this.lines[line.id] = line;
+  this.addLine = function (a,b) {
+    const line = document.createElementNS(SVG_NS, "line");
+    line.setAttributeNS(null, "x1", a.x); //set its points
+    line.setAttributeNS(null, "y1", a.y);
+    line.setAttributeNS(null, "x2", b.x);
+    line.setAttributeNS(null, "y2", b.y);
+    this.lines.push(line);
+    line.id = this.nextID;
+    this.nextID++;
+    line.classList.add("line");
     this.svg.appendChild(line);
+    console.log("line added");
+    console.log(a);
+    console.log(b);
   }
 
   this.removeLine = function(line) {
-    let rem = this.lines[line.id];
-    rem.remove();
+    if(Line(a,b,id)){
+      let rem = line; 
+    } else{
+    return console.log("nothing");
+    }
   }
 
 }
@@ -176,7 +180,7 @@ function Line(a,b,id){
   this.a = a;
   this.b = b;
   this.id = id;
-
+  this.nextID = 0;
 
   this.equals = function(a,b) {
     return (this.a == this.a && this.b == b) || (this.a == b && this.b == a);
@@ -203,36 +207,13 @@ function ConvexHull(ps, viewer) {
     }
   }
 
-  this.makeLine = function(a, b) {
-    if (!this.isLine(a, b)) {
-      const line = new Line(a, b, this.nextEdgeID);
-      this.nextEdgeID++;
-      for(let i = 0; i < this.dots.length; i++){
-        if (this.dots.points[i] = a) {
-          this.dots.points[i+1] = b;
-        } 
-      }
-      this.lines.push(line);
-      console.log("added line (" + a.id + ", " + b.id + ")");
-      return line;
-    } else {
-      console.log("line (" + a.id + ", " + b.id + ") not added because it is already in the graph");
-      return null;
-    }
-  }
-
   this.start = function () {
     this.stack = [];
     this.a = ps.points[0];
     this.b = ps.points[1];
     this.c = ps.points[2];
+    this.counter = 3;
     console.log("Click to start");
-
-    ch = this.getConvexHull;
-
-    for(let i = 0; i < ch.length -1 ; i++){
-      this.addLine(ch.points[i], ch.points[i+1]);
-    }
     
   }
   // perform a single step of the Graham scan algorithm performed on ps
@@ -241,15 +222,31 @@ function ConvexHull(ps, viewer) {
       this.stack.push(this.a);
       this.stack.push(this.b);
       this.viewer.addLine(this.a, this.b);
+      console.log("this is a = " + this.a);
+      console.log("this is b = " + this.b);
     } else if (!cross(this.a, this.b, this.c) && ps.size() > 1) {
       this.stack.pop();
+      this.viewer.removeLine(Line(this.a,this.b,this.id));
       this.b = this.a;
       this.a = this.stack[this.stack.length - 2];
+      console.log("not right");
     } else {
       this.stack.push(this.c);
-      this.viewer.drawLine(this.b, this.c);
-      this.a = this.b;
-      this.b = this.c;
+      this.viewer.addLine(this.b, this.c);
+      console.log("right");
+      console.log(this.stack[this.stack.length -1]);
+      this.b = this.stack[this.stack.length - 1];
+      this.a = this.stack[this.stack.length - 2];      
+      this.c = ps.points[this.counter];
+      if(this.counter < ps.points.length - 1){
+      this.counter++;}
+      else if(this.counter == ps.points.length - 1){
+        this.counter = 0;
+      }
+      console.log("this is a = " + this.a);
+      console.log("this is b = " + this.b);
+      console.log("this is c = " + this.c);
+      console.log(this.stack);
     }
   };
 
