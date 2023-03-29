@@ -209,6 +209,7 @@ function ConvexHull(ps, viewer) {
 
   this.start = function () {
     this.stack = [];
+    ps.sort();
     this.a = ps.points[0];
     this.b = ps.points[1];
     this.c = ps.points[2];
