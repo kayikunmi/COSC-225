@@ -212,10 +212,9 @@ function ConvexHull(ps, viewer) {
     console.log("ps before sort: " + ps);
     let nps = new PointSet();
     nps = this.getConvexHull();
-    this.ps = this.nps;
-    ps.sort();
-    // nps = ps.ge
-    // nps = ps;
+    this.ps = this.getConvexHull();
+    //how can i change ps to become nps
+    ps = nps;
     console.log("nps: " + nps);
     console.log("ps after sort: " + ps);
     this.a = ps.points[0];
@@ -227,10 +226,12 @@ function ConvexHull(ps, viewer) {
   }
   // perform a single step of the Graham scan algorithm performed on ps
   this.step = function () {
+    ps.sort();
     if (this.stack.length == 0) {
       this.stack.push(this.a);
       this.stack.push(this.b);
       this.viewer.addLine(this.a, this.b);
+      console.log("wtf");
       //console.log("this is a = " + this.a);
       //console.log("this is b = " + this.b);
     } else if (!cross(this.a, this.b, this.c) && ps.size() > 1) {
@@ -241,6 +242,8 @@ function ConvexHull(ps, viewer) {
       console.log("not right");
     } else {
       this.stack.push(this.c);
+      //before we add the line, let's check if it's going in the right direction
+      //if it's not, don't add the line
       this.viewer.addLine(this.b, this.c);
       console.log("right");
       //console.log(this.stack[this.stack.length -1]);
@@ -323,3 +326,4 @@ exports.ConvexHull = ConvexHull;
 } catch (e) {
 //console.log("not running in Node");
 }
+
