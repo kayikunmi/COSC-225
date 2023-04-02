@@ -1,9 +1,11 @@
+let svg_ns = "http://www.w3.org/2000/svg";
 function drawCircle(x, y, r, depth, scaleFactor) {
   if (depth <= 0) {
     return;
   }
 
-  var circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+
+  var circle = document.createElementNS(svg_ns, "circle");
   circle.setAttribute("cx", x);
   circle.setAttribute("cy", y);
   circle.setAttribute("r", r);
@@ -25,7 +27,7 @@ function drawTriangle(x, y, r, depth, scaleFactor) {
     return;
   }
 
-  var triangle = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+  var triangle = document.createElementNS(svg_ns, "polygon");
   var points = (x-r) + "," + y + " " + x + "," + (y-r) + " " + (x+r) + "," + y;
   triangle.setAttribute("points", points);
   triangle.setAttribute("fill", "rgb(123,165,133)");
