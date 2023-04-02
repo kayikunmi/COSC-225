@@ -9,6 +9,7 @@ function drawCircle(x, y, r, depth) {
   circle.setAttribute("r", r);
   circle.setAttribute("fill", "none");
   circle.setAttribute("stroke", "black");
+  circle.setAttribute("transform", "rotate(" + (x + y) + " " + x + " " + y + ")");
 
   var svg = document.getElementById("main-svg");
   svg.appendChild(circle);
