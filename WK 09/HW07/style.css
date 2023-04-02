@@ -1,6 +1,14 @@
 svg {
     border: 1px solid black;
+  }
+  
+  #main-svg {
     display: block;
     margin: auto;
+  }
+  
+  .triangle {
+    fill: none;
+    stroke: black;
   }
   
