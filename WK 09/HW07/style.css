@@ -1,14 +1,16 @@
-svg {
+#container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* height: 100vh; */
+  }
+  
+  svg {
     border: 1px solid black;
   }
   
-  #main-svg {
-    display: block;
-    margin: auto;
+  /* #main-svg {
+    width: 100%;
+    height: 100%;
   }
-  
-  .triangle {
-    fill: none;
-    stroke: black;
-  }
-  
+   */
