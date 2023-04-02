@@ -2,40 +2,12 @@
 <html>
 <head>
   <title>Self-similar Images with SVG and JavaScript</title>
-  <style>
-    svg {
-      border: 1px solid black;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <svg width="650" height="650">
+  <svg id="main-svg" width="650" height="650">
     <circle cx="325" cy="325" r="150" fill="none" stroke="black" />
   </svg>
-
-  <script>
-    function drawCircle(x, y, r, depth) {
-      if (depth <= 0) {
-        return;
-      }
-
-      var circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-      circle.setAttribute("cx", x + 325);
-      circle.setAttribute("cy", y + 325);
-      circle.setAttribute("r", r);
-      circle.setAttribute("fill", "none");
-      circle.setAttribute("stroke", "black");
-
-      var svg = document.getElementsByTagName("svg")[0];
-      svg.appendChild(circle);
-
-      drawCircle(x - r, y, r * 0.5, depth - 1);
-      drawCircle(x + r, y, r * 0.5, depth - 1);
-      drawCircle(x, y - r, r * 0.5, depth - 1);
-      drawCircle(x, y + r, r * 0.5, depth - 1);
-    }
-
-    drawCircle(0, 0, 150, 4);
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
