@@ -5,7 +5,7 @@ function drawCircleWithDiamond(x, y, r, depth, scaleFactor) {
     return;
   }
 
-  var circle = document.createElementNS(svg_ns, "circle");
+  let circle = document.createElementNS(svg_ns, "circle");
   circle.setAttribute("cx", x);
   circle.setAttribute("cy", y);
   circle.setAttribute("r", r);
@@ -13,18 +13,18 @@ function drawCircleWithDiamond(x, y, r, depth, scaleFactor) {
   circle.setAttribute("stroke", "black");
   circle.setAttribute("transform", "scale(" + scaleFactor + ")");
 
-  var svg = document.getElementById("main-svg");
+  let svg = document.getElementById("main-svg");
   svg.appendChild(circle);
 
-  var triangle = document.createElementNS(svg_ns, "polygon");
-  var points = (x-r) + "," + y + " " + x + "," + (y-r) + " " + (x+r) + "," + y;
+  let triangle = document.createElementNS(svg_ns, "polygon");
+  let points = (x-r) + "," + y + " " + x + "," + (y-r) + " " + (x+r) + "," + y;
   triangle.setAttribute("points", points);
   triangle.setAttribute("fill", "rgb(123,165,133)");
   triangle.setAttribute("stroke", "none");
   triangle.setAttribute("transform", "scale(" + scaleFactor + ")");
   svg.appendChild(triangle);
 
-  var clonedTriangle = triangle.cloneNode(true);
+  let clonedTriangle = triangle.cloneNode(true);
   clonedTriangle.setAttribute("transform", "scale(" + scaleFactor + ") rotate(180 " + x + " " + y + ")");
   svg.appendChild(clonedTriangle);
 
@@ -34,5 +34,5 @@ function drawCircleWithDiamond(x, y, r, depth, scaleFactor) {
   drawCircleWithDiamond(x, y + r, r * 0.5, depth - 1, scaleFactor);
 }
 
-var scaleFactor = 0.5;
-drawCircleWithDiamond(600, 600, 300, 4, scaleFactor);
+let scaleFactor = 0.5;
+drawCircleWithDiamond(600, 600, 300, 6, scaleFactor);
