@@ -34,5 +34,5 @@ function drawCircleWithDiamond(x, y, r, depth, scaleFactor) {
   drawCircleWithDiamond(x, y + r, r * 0.5, depth - 1, scaleFactor);
 }
 
-let scaleFactor = 0.5;
-drawCircleWithDiamond(600, 600, 300, 6, scaleFactor);
+// let scaleFactor = 0.5;
+// drawCircleWithDiamond(600, 600, 300, 6, scaleFactor);
