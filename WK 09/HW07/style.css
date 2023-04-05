@@ -2,7 +2,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /* height: 100vh; */
   }
 
   #description{
@@ -18,12 +17,12 @@
   }
 
   #paragraph{
-    margin-left: 8%;
-    margin-right: 8%;
+    margin-left: 5%;
+    margin-right: 5%;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 125%;
+    font-size: 110%;
   }
   
   svg {
