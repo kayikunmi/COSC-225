@@ -18,17 +18,15 @@
   }
 
   #paragraph{
+    margin-left: 8%;
+    margin-right: 8%;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 125%;
   }
   
   svg {
     border: 1px solid black;
   }
   
-  /* #main-svg {
-    width: 100%;
-    height: 100%;
-  }
-   */

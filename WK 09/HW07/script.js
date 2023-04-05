@@ -1,13 +1,11 @@
 let svg_ns = "http://www.w3.org/2000/svg";
 
-//Function to draw SS image using circles and diamonds(two triangles)
 function drawCircleWithDiamond(x, y, r, depth, scaleFactor) {
-  // Base case: if depth is 0, stop recursion
   if (depth <= 0) {
     return;
   }
 
-  //Draw a circle at the given x, y coordinates with the specified radius and scale factor
+  // Create and append the circle
   let circle = document.createElementNS(svg_ns, "circle");
   circle.setAttribute("cx", x);
   circle.setAttribute("cy", y);
@@ -15,26 +13,28 @@ function drawCircleWithDiamond(x, y, r, depth, scaleFactor) {
   circle.setAttribute("fill", "none");
   circle.setAttribute("stroke", "black");
   circle.setAttribute("transform", "scale(" + scaleFactor + ")");
-
-  //Append the circle to the SVG element
   let svg = document.getElementById("main-svg");
   svg.appendChild(circle);
 
-  //Draw a diamond shape (first triangle) at the corners of the circle
-  let triangle = document.createElementNS(svg_ns, "polygon");
-  let points = (x-r) + "," + y + " " + x + "," + (y-r) + " " + (x+r) + "," + y;
-  triangle.setAttribute("points", points);
-  triangle.setAttribute("fill", "rgb(123,165,133)");
-  triangle.setAttribute("stroke", "none");
-  triangle.setAttribute("transform", "scale(" + scaleFactor + ")");
-  svg.appendChild(triangle);
+  // Create and append the first triangle
+  let triangle1 = document.createElementNS(svg_ns, "polygon");
+  let points1 = (x-r) + "," + y + " " + x + "," + (y-r) + " " + (x+r) + "," + y;
+  triangle1.setAttribute("points", points1);
+  triangle1.setAttribute("fill", "rgb(123,165,133)");
+  triangle1.setAttribute("stroke", "black");
+  triangle1.setAttribute("transform", "scale(" + scaleFactor + ")");
+  svg.appendChild(triangle1);
 
-  //Clone the diamond shape and rotate it by 180 degrees to draw the other half of the diamond
-  let clonedTriangle = triangle.cloneNode(true);
-  clonedTriangle.setAttribute("transform", "scale(" + scaleFactor + ") rotate(180 " + x + " " + y + ")");
-  svg.appendChild(clonedTriangle);
+  // Create and append the second triangle
+  let triangle2 = document.createElementNS(svg_ns, "polygon");
+  let points2 = (x-r) + "," + y + " " + x + "," + (y+r) + " " + (x+r) + "," + y;
+  triangle2.setAttribute("points", points2);
+  triangle2.setAttribute("fill", "rgb(123,165,133)");
+  triangle2.setAttribute("stroke", "black");
+  triangle2.setAttribute("transform", "scale(" + scaleFactor + ")");
+  svg.appendChild(triangle2);
 
-  // Recursively call the function with reduced radius and depth for each corner of the diamond
+  // Recursively call the function for the four smaller circles
   drawCircleWithDiamond(x - r, y, r * 0.5, depth - 1, scaleFactor);
   drawCircleWithDiamond(x + r, y, r * 0.5, depth - 1, scaleFactor);
   drawCircleWithDiamond(x, y - r, r * 0.5, depth - 1, scaleFactor);
