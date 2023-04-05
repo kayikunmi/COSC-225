@@ -5,11 +5,37 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div id="header">
+    <h1>Self Similar Image</h1>
+  </div>
+
+  <div id="paragraph">
+    <h3>The self-similar image is created using SVG 
+      (Scalable Vector Graphics) and JavaScript. 
+      The function drawCircleWithDiamond draws circles 
+      and diamonds (triangles) recursively. 
+      Starting with a circle at the center, 
+      it draws four diamonds (triangles) at the corners of 
+      the circle, and then recursively repeats this process 
+      with reduced radius and depth for each corner, 
+      creating a self-similar pattern. The scale factor 
+      determines the size of the circles and diamonds, and 
+      the depth controls the level of recursion and 
+      complexity of the image. 
+      The circles have no fill and a black stroke, 
+      while the diamonds (triangles) have a green 
+      fill and no stroke. The resulting image is a visually 
+      interesting and intricate pattern formed by the circles 
+      and diamonds. Overall, this code uses SVG and JavaScript to 
+      generate a self-similar image with geometric shapes. 
+      Be sure to have an SVG element with an id of "main-svg" 
+      in your HTML file to render the image. You can also adjust 
+      the initial parameters of the function call to drawCircleWithDiamond 
+      to modify the appearance of the image.</h3>
+    <!-- <p>kayikunmi</p> -->
+  </div>
+ 
   <div id="container">
-    <!-- <h1>Self Similar Image</h1>
-    <div id="description">
-      This webpage shows a self similar image made with SVG Transformations
-    </div> -->
     <svg id="main-svg" width="600" height="600">
     </svg>
   </div>

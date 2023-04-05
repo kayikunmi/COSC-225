@@ -4,6 +4,24 @@
     align-items: center;
     /* height: 100vh; */
   }
+
+  #description{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #paragraph{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   
   svg {
     border: 1px solid black;
