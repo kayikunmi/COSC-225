@@ -4,6 +4,10 @@
     align-items: center;
   }
 
+  body{
+    background-color: rgb(179, 196, 183);
+  }
+
   #description{
     display: flex;
     justify-content: center;
@@ -25,7 +29,8 @@
     font-size: 110%;
   }
   
-  svg {
-    border: 1px solid black;
+  #main-svg{
+    border: 2px solid black;
+    background-color: rgb(254, 210, 239);
   }
   
