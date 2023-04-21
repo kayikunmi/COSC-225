@@ -1,156 +1,125 @@
-document.addEventListener("DOMContentLoaded", function() {
-// Get the necessary DOM elements
-const mazeContainer = document.getElementById("maze-container");
-const generateButton = document.getElementById("generate-btn");
-
-// Set up variables for the maze dimensions and cell size
-const MAZE_WIDTH = 20;
-const MAZE_HEIGHT = 20;
-const CELL_SIZE = 20;
-
-// Initialize the maze grid
-const mazeGrid = new Array(MAZE_HEIGHT);
-for (let i = 0; i < MAZE_HEIGHT; i++) {
-  mazeGrid[i] = new Array(MAZE_WIDTH);
-}
-
-// Function to generate the maze
-function generateMaze() {
-    // Clear the maze container
-    mazeContainer.innerHTML = "";
+function createMaze(width, height) {
+    let maze = initializeMaze(width, height); // create an empty maze
+    let stack = []; // initialize a stack to keep track of visited cells
   
-    // Initialize the maze grid
-    for (let row = 0; row < MAZE_HEIGHT; row++) {
-      for (let col = 0; col < MAZE_WIDTH; col++) {
-        mazeGrid[row][col] = {
+    // choose a random starting cell
+    let currentCell = chooseRandomCell(maze);
+  
+    // mark the current cell as visited
+    maze[currentCell.x][currentCell.y].visited = true;
+  
+    // repeat until all cells have been visited
+    while (stack.length > 0) {
+      // get all unvisited neighbors of the current cell
+      let neighbors = getUnvisitedNeighbors(currentCell, maze);
+  
+      if (neighbors.length > 0) {
+        // choose a random unvisited neighbor
+        let nextCell = chooseRandomNeighbor(neighbors);
+  
+        // remove the wall between the current cell and the next cell
+        removeWall(currentCell, nextCell);
+  
+        // push the current cell onto the stack
+        stack.push(currentCell);
+  
+        // mark the next cell as visited and set it as the current cell
+        maze[nextCell.x][nextCell.y].visited = true;
+        currentCell = nextCell;
+      } else {
+        // backtrack to the previous cell on the stack
+        currentCell = stack.pop();
+      }
+    }
+  
+    return maze;
+  }
+  
+  function initializeMaze(width, height) {
+    let maze = [];
+  
+    // create a 2D array of cells
+    for (let x = 0; x < width; x++) {
+      maze[x] = [];
+      for (let y = 0; y < height; y++) {
+        maze[x][y] = {
+          x: x,
+          y: y,
           visited: false,
-          northWall: true,
-          eastWall: true,
-          southWall: true,
-          westWall: true
+          walls: {
+            north: true,
+            east: true,
+            south: true,
+            west: true
+          }
         };
       }
     }
   
-    // Set a random starting cell in the grid
-    let currentRow = Math.floor(Math.random() * MAZE_HEIGHT);
-    let currentCol = Math.floor(Math.random() * MAZE_WIDTH);
-  
-    // Mark the starting cell as visited
-    mazeGrid[currentRow][currentCol].visited = true;
-  
-    // Create a stack to keep track of visited cells
-    const stack = [];
-    stack.push([currentRow, currentCol]);
-  
-    // While the stack is not empty, do the following
-    while (stack.length > 0) {
-      // Pop a cell from the stack
-      const [row, col] = stack.pop();
-  
-      // Check if the cell has any unvisited neighbors
-      const neighbors = [];
-      if (row > 0 && !mazeGrid[row - 1][col].visited) {
-        neighbors.push([row - 1, col, "north"]);
-      }
-      if (col < MAZE_WIDTH - 1 && !mazeGrid[row][col + 1].visited) {
-        neighbors.push([row, col + 1, "east"]);
-      }
-      if (row < MAZE_HEIGHT - 1 && !mazeGrid[row + 1][col].visited) {
-        neighbors.push([row + 1, col, "south"]);
-      }
-      if (col > 0 && !mazeGrid[row][col - 1].visited) {
-        neighbors.push([row, col - 1, "west"]);
-      }
-  
-      // If the cell has unvisited neighbors, do the following
-      if (neighbors.length > 0) {
-        // Push the current cell back onto the stack
-        stack.push([row, col]);
-  
-        // Choose a random unvisited neighbor
-        const [neighborRow, neighborCol, direction] = neighbors[Math.floor(Math.random() * neighbors.length)];
-  
-        // Remove the wall between the current cell and the chosen neighbor
-        switch (direction) {
-          case "north":
-            mazeGrid[row][col].northWall = false;
-            mazeGrid[neighborRow][neighborCol].southWall = false;
-            break;
-          case "east":
-            mazeGrid[row][col].eastWall = false;
-            mazeGrid[neighborRow][neighborCol].westWall = false;
-            break;
-          case "south":
-            mazeGrid[row][col].southWall = false;
-            mazeGrid[neighborRow][neighborCol].northWall = false;
-            break;
-          case "west":
-            mazeGrid[row][col].westWall = false;
-            mazeGrid[neighborRow][neighborCol].eastWall = false;
-            break;
-        }
-  
-        // Mark the chosen neighbor as visited and push it to the stack
-        mazeGrid[neighborRow][neighborCol].visited = true;
-        stack.push([neighborRow, neighborCol]);
-      }
-    }
-  
-    // Add the cells to the maze container
-    for (let row = 0; row < MAZE_HEIGHT; row++) {
-        for (let col = 0; col < MAZE_WIDTH; col++) {
-            // Get the cell from the maze grid
-            const cell = mazeGrid[row][col];
-                // Add the walls to the cell
-    if (cell.northWall) {
-        const wall = document.createElement("div");
-        wall.className = "wall";
-        wall.style.top = row * CELL_SIZE + "px";
-        wall.style.left = col * CELL_SIZE + "px";
-        wall.style.width = CELL_SIZE + "px";
-        mazeContainer.appendChild(wall);
-      }
-      if (cell.eastWall) {
-        const wall = document.createElement("div");
-        wall.className = "wall";
-        wall.style.top = row * CELL_SIZE + "px";
-        wall.style.left = (col + 1) * CELL_SIZE + "px";
-        wall.style.height = CELL_SIZE + "px";
-        mazeContainer.appendChild(wall);
-      }
-      if (cell.southWall) {
-        const wall = document.createElement("div");
-        wall.className = "wall";
-        wall.style.top = (row + 1) * CELL_SIZE + "px";
-        wall.style.left = col * CELL_SIZE + "px";
-        wall.style.width = CELL_SIZE + "px";
-        mazeContainer.appendChild(wall);
-      }
-      if (cell.westWall) {
-        const wall = document.createElement("div");
-        wall.className = "wall";
-        wall.style.top = row * CELL_SIZE + "px";
-        wall.style.left = col * CELL_SIZE + "px";
-        wall.style.height = CELL_SIZE + "px";
-        mazeContainer.appendChild(wall);
-      }
-    }
+    return maze;
   }
   
-
-  // TODO: Generate the maze using your preferred algorithm
-  /*Set a random starting cell in the grid.
-    Push the starting cell to the stack.
-    While the stack is not empty, do the following:
-        a. Pop a cell from the stack.
-    b. If the cell has not been visited yet, mark it as visited and 
-    remove the wall between the current cell and a randomly chosen 
-    neighboring cell that has not been visited.
-    c. Push all unvisited neighboring cells to the stack.
-    Repeat until all cells have been visited.*/
+  function chooseRandomCell(maze) {
+    // choose a random cell within the maze
+    let x = Math.floor(Math.random() * maze.length);
+    let y = Math.floor(Math.random() * maze[0].length);
+  
+    return maze[x][y];
+  }
+  
+  function getUnvisitedNeighbors(cell, maze) {
+    let neighbors = [];
+  
+    // check north neighbor
+    if (cell.y > 0 && !maze[cell.x][cell.y - 1].visited) {
+      neighbors.push(maze[cell.x][cell.y - 1]);
+    }
+  
+    // check east neighbor
+    if (cell.x < maze.length - 1 && !maze[cell.x + 1][cell.y].visited) {
+      neighbors.push(maze[cell.x + 1][cell.y]);
+    }
+  
+    // check south neighbor
+    if (cell.y < maze[0].length - 1 && !maze[cell.x][cell.y + 1].visited) {
+      neighbors.push(maze[cell.x][cell.y + 1]);
+    }
+  
+    // check west neighbor
+    if (cell.x > 0 && !maze[cell.x - 1][cell.y].visited) {
+      neighbors.push(maze[cell.x - 1][cell.y]);
+    }
+  
+    return neighbors;
+  }
+  
+  function chooseRandomNeighbor(neighbors) {
+    // choose a random neighbor from the list of unvisited neighbors
+    let index = Math.floor(Math.random() * neighbors.length);
+    return neighbors[index];
+  }
+  
+  function removeWall(cell1, cell2) {
+    // remove the wall between two adjacent cells
+    if (cell1.x < cell2.x) {
+      // remove east wall of cell1 and west wall of cell2
+      cell1.walls.e = false;
+      cell2.walls.west = false;
+    } 
+    else if (cell1.x > cell2.x) {
+        // remove west wall of cell1 and east wall of cell2
+        cell1.walls.west = false;
+        cell2.walls.east = false;
+    } 
+    else if (cell1.y < cell2.y) {
+        // remove south wall of cell1 and north wall of cell2
+        cell1.walls.south = false;
+        cell2.walls.north = false;
+    } 
+    else if (cell1.y > cell2.y) {
+        // remove north wall of cell1 and south wall of cell2
+        cell1.walls.north = false;
+        cell2.walls.south = false;
+    }
 }
-
-// Add an event listener to the "Generate Maze" button
-generateButton.addEventListener("click", generateMaze);
-});
+  

@@ -1,46 +1,35 @@
-/* Set up some basic styles */
 body {
     margin: 0;
     padding: 0;
   }
-  
-  h1 {
-    text-align: center;
-    margin-top: 50px;
+  #maze {
+    display: flex;
+    flex-wrap: wrap;
+    width: 80vw;
+    height: 80vh;
+    margin: 10vh auto;
   }
-  
-  #maze-container {
-    position: relative;
-    margin: 50px auto;
-    width: 800px;
-    height: 800px;
-    border: 1px solid black;
-  }
-  
   .cell {
-    position: absolute;
+    flex: 1 1 auto;
     background-color: white;
     border: 1px solid black;
+    box-sizing: border-box;
   }
-  
-  /* Add some styles for the buttons */
-  button {
-    display: block;
-    margin: 20px auto;
-    padding: 10px 20px;
-    font-size: 18px;
-    border-radius: 5px;
-    border: none;
-    background-color: #4CAF50;
-    color: white;
-    cursor: pointer;
+  .cell.north {
+    border-top: none;
   }
-  
-  button:hover {
-    background-color: #3e8e41;
+  .cell.east {
+    border-right: none;
   }
-  
-  button:active {
-    background-color: #1e6d32;
+  .cell.south {
+    border-bottom: none;
   }
-  
+  .cell.west {
+    border-left: none;
+  }
+  .cell.start {
+    background-color: green;
+  }
+  .cell.end {
+    background-color: red;
+  }
