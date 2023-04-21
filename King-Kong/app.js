@@ -54,7 +54,8 @@ function generateMaze() {
     const startRow = Math.floor(Math.random() * MAZE_HEIGHT);
     const startCol = Math.floor(Math.random() * MAZE_WIDTH);
     startCell = mazeGrid[startRow][startCol];
-  } while (startCell.classList.contains("blocked"));
+  } 
+  while (startCell.classList.contains("blocked"));
 
   // Choose a random ending cell that is not blocked and not the starting cell
   do {
