@@ -122,22 +122,32 @@ function getUnvisitedNeighbors(cell) {
 
 function dfs(startCell) {
     const stack = [startCell];
-    startCell.classList.add("visited"); // mark the start cell as visited
+    const visited = new Set();
+    const paths = new Map();
+    visited.add(startCell);
     while (stack.length > 0) {
-      const currentCell = stack.pop();
-      if (currentCell === endCell) { // break loop if current cell is end cell
-        break;
-      }
-      const neighbors = getUnvisitedNeighbors(currentCell);
-      shuffle(neighbors);
-      for (const neighbor of neighbors) {
-        if (!neighbor.classList.contains("visited")) {
-          neighbor.classList.add("visited");
-          stack.push(neighbor);
+        const currentCell = stack.pop();
+        if (currentCell === endCell) {
+            // Build path
+            let pathCell = currentCell;
+            while (pathCell !== startCell) {
+                pathCell.classList.add("path");
+                pathCell = paths.get(pathCell);
+            }
+            break;
         }
-      }
+        const neighbors = getUnvisitedNeighbors(currentCell);
+        shuffle(neighbors);
+        for (const neighbor of neighbors) {
+            if (!visited.has(neighbor)) {
+                visited.add(neighbor);
+                paths.set(neighbor, currentCell);
+                stack.push(neighbor);
+            }
+        }
     }
-  }
+}
+
   
   
   async function dfs(startCell) {
