@@ -61,7 +61,8 @@ function generateMaze() {
     const endRow = Math.floor(Math.random() * MAZE_HEIGHT);
     const endCol = Math.floor(Math.random() * MAZE_WIDTH);
     endCell = mazeGrid[endRow][endCol];
-  } while (endCell.classList.contains("blocked") || endCell === startCell);
+  } 
+  while (endCell.classList.contains("blocked") || endCell === startCell);
 
   // Mark the start and end cells
   startCell.classList.add("start");
