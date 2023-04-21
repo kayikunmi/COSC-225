@@ -57,6 +57,12 @@ body {
   }
   
   .end {
-    background-color: red;
+    background-color: blue;
+  }
+  .visited{
+    background-color: rgb(225, 135, 135);
+  }
+  .unvisited{
+    background-color: rgb(249, 206, 206);
   }
   

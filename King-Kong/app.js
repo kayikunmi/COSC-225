@@ -67,43 +67,44 @@ function generateMaze() {
   // Mark the start and end cells
   startCell.classList.add("start");
   endCell.classList.add("end");
-
-  // Generate the maze using DFS algorithm
+  // Mark the start cell as visited and generate the maze using DFS algorithm
+  startCell.classList.add("visited");
   dfs(startCell);
-
   // Remove the "visited" class from all cells
   const cells = document.querySelectorAll(".cell");
   for (let i = 0; i < cells.length; i++) {
-    cells[i].classList.remove("visited");
-  }
+        cells[i].classList.remove("visited");
+    }
+
 }
 
 function getUnvisitedNeighbors(cell) {
     const { row, col } = getCellPosition(cell);
     const neighbors = [];
   
-    // Check the north neighbor
-    if (row > 0 && !mazeGrid[row - 1][col].classList.contains("visited")) {
+    // Check the north neighbor if it is not blocked and unvisited
+    if (row > 0 && !mazeGrid[row - 1][col].classList.contains("visited") && !mazeGrid[row - 1][col].classList.contains("blocked")) {
       neighbors.push(mazeGrid[row - 1][col]);
     }
   
-    // Check the east neighbor
-    if (col < MAZE_WIDTH - 1 && !mazeGrid[row][col + 1].classList.contains("visited")) {
+    // Check the east neighbor if it is not blocked and unvisited
+    if (col < MAZE_WIDTH - 1 && !mazeGrid[row][col + 1].classList.contains("visited") && !mazeGrid[row][col + 1].classList.contains("blocked")) {
       neighbors.push(mazeGrid[row][col + 1]);
     }
   
-    // Check the south neighbor
-    if (row < MAZE_HEIGHT - 1 && !mazeGrid[row + 1][col].classList.contains("visited")) {
+    // Check the south neighbor if it is not blocked and unvisited
+    if (row < MAZE_HEIGHT - 1 && !mazeGrid[row + 1][col].classList.contains("visited") && !mazeGrid[row + 1][col].classList.contains("blocked")) {
       neighbors.push(mazeGrid[row + 1][col]);
     }
   
-    // Check the west neighbor
-    if (col > 0 && !mazeGrid[row][col - 1].classList.contains("visited")) {
+    // Check the west neighbor if it is not blocked and unvisited
+    if (col > 0 && !mazeGrid[row][col - 1].classList.contains("visited") && !mazeGrid[row][col - 1].classList.contains("blocked")) {
       neighbors.push(mazeGrid[row][col - 1]);
     }
   
     return neighbors;
   }
+  
   
 
   function getCellPosition(cell) {
@@ -121,18 +122,24 @@ function getUnvisitedNeighbors(cell) {
 
 function dfs(startCell) {
     const stack = [startCell];
+    startCell.classList.add("visited"); // mark the start cell as visited
     while (stack.length > 0) {
       const currentCell = stack.pop();
-      if (!currentCell.classList.contains("visited")) {
-        currentCell.classList.add("visited");
-        const neighbors = getUnvisitedNeighbors(currentCell);
-        shuffle(neighbors);
-        for (const neighbor of neighbors) {
+      if (currentCell === endCell) { // break loop if current cell is end cell
+        break;
+      }
+      const neighbors = getUnvisitedNeighbors(currentCell);
+      shuffle(neighbors);
+      for (const neighbor of neighbors) {
+        if (!neighbor.classList.contains("visited")) {
+          neighbor.classList.add("visited");
           stack.push(neighbor);
         }
       }
     }
   }
+  
+  
   async function dfs(startCell) {
     const stack = [startCell];
     while (stack.length > 0) {
@@ -149,7 +156,7 @@ function dfs(startCell) {
         await new Promise(resolve => setTimeout(resolve, 10));
       }
     }
-  }
+  }  
 
 // Add an event listener to the "Generate Maze" button
 generateButton.addEventListener("click", generateMaze);
