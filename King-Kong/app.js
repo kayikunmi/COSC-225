@@ -150,19 +150,6 @@ function dfs(startCell) {
       }
     }
   }
-  
-  
-  // TODO: Generate the maze using DFS algorithm
-  /*Set a random starting cell in the grid.
-    Push the starting cell to the stack.
-    While the stack is not empty, do the following:
-        a. Pop a cell from the stack.
-    b. If the cell has not been visited yet, mark it as visited and 
-    remove the wall between the current cell and a randomly chosen 
-    neighboring cell that has not been visited.
-    c. Push all unvisited neighboring cells to the stack.
-    Repeat until all cells have been visited.*/
-
 
 // Add an event listener to the "Generate Maze" button
 generateButton.addEventListener("click", generateMaze);
