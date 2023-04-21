@@ -43,39 +43,20 @@ body {
   button:active {
     background-color: #1e6d32;
   }
-  
-  body {
-    margin: 0;
-    padding: 0;
-  }
-  #maze {
-    display: flex;
-    flex-wrap: wrap;
-    width: 80vw;
-    height: 80vh;
-    margin: 10vh auto;
-  }
   .cell {
-    flex: 1 1 auto;
-    background-color: white;
     border: 1px solid black;
-    box-sizing: border-box;
+    position: absolute;
   }
-  .cell.north {
-    border-top: none;
+  
+  .blocked {
+    background-color: gray;
   }
-  .cell.east {
-    border-right: none;
-  }
-  .cell.south {
-    border-bottom: none;
-  }
-  .cell.west {
-    border-left: none;
-  }
-  .cell.start {
+  
+  .start {
     background-color: green;
   }
-  .cell.end {
+  
+  .end {
     background-color: red;
   }
+  

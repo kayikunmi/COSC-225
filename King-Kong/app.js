@@ -7,6 +7,9 @@ const MAZE_WIDTH = 30;
 const MAZE_HEIGHT = 30;
 const CELL_SIZE = 30;
 
+// Set up variables for the starting and ending cells
+let startCell, endCell;
+
 // Initialize the maze grid
 const mazeGrid = new Array(MAZE_HEIGHT);
 for (let i = 0; i < MAZE_HEIGHT; i++) {
@@ -36,12 +39,35 @@ function generateMaze() {
       // Add the cell to the maze container
       mazeContainer.appendChild(cell);
 
+      // Randomly decide if the cell should be blocked or not
+      if (Math.random() < 0.3) { // adjust probability as desired
+        cell.classList.add("blocked");
+      }
+
       // Set the cell in the maze grid
       mazeGrid[row][col] = cell;
     }
   }
 
-  // TODO: Generate the maze using your preferred algorithm
+  // Choose a random starting cell that is not blocked
+  do {
+    const startRow = Math.floor(Math.random() * MAZE_HEIGHT);
+    const startCol = Math.floor(Math.random() * MAZE_WIDTH);
+    startCell = mazeGrid[startRow][startCol];
+  } while (startCell.classList.contains("blocked"));
+
+  // Choose a random ending cell that is not blocked and not the starting cell
+  do {
+    const endRow = Math.floor(Math.random() * MAZE_HEIGHT);
+    const endCol = Math.floor(Math.random() * MAZE_WIDTH);
+    endCell = mazeGrid[endRow][endCol];
+  } while (endCell.classList.contains("blocked") || endCell === startCell);
+
+  // Mark the start and end cells
+  startCell.classList.add("start");
+  endCell.classList.add("end");
+
+  // TODO: Generate the maze using DFS algorithm
   /*Set a random starting cell in the grid.
     Push the starting cell to the stack.
     While the stack is not empty, do the following:
@@ -55,4 +81,3 @@ function generateMaze() {
 
 // Add an event listener to the "Generate Maze" button
 generateButton.addEventListener("click", generateMaze);
-
