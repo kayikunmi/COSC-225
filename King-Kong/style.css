@@ -12,8 +12,8 @@ body {
   #maze-container {
     position: relative;
     margin: 50px auto;
-    width: 400px;
-    height: 400px;
+    width: 800px;
+    height: 800px;
     border: 1px solid black;
   }
   
