@@ -1,6 +1,7 @@
 // Get the necessary DOM elements
 const mazeContainer = document.getElementById("maze-container");
 const generateButton = document.getElementById("generate-btn");
+const solveButton = document.getElementById("solve-btn");
 
 // Set up variables for the maze dimensions and cell size
 const MAZE_WIDTH = 30;
@@ -54,21 +55,103 @@ function generateMaze() {
     const startRow = Math.floor(Math.random() * MAZE_HEIGHT);
     const startCol = Math.floor(Math.random() * MAZE_WIDTH);
     startCell = mazeGrid[startRow][startCol];
-  } 
-  while (startCell.classList.contains("blocked"));
+  } while (startCell.classList.contains("blocked"));
 
   // Choose a random ending cell that is not blocked and not the starting cell
   do {
     const endRow = Math.floor(Math.random() * MAZE_HEIGHT);
     const endCol = Math.floor(Math.random() * MAZE_WIDTH);
     endCell = mazeGrid[endRow][endCol];
-  } 
-  while (endCell.classList.contains("blocked") || endCell === startCell);
+  } while (endCell.classList.contains("blocked") || endCell === startCell);
 
   // Mark the start and end cells
   startCell.classList.add("start");
   endCell.classList.add("end");
 
+  // Generate the maze using DFS algorithm
+  dfs(startCell);
+
+  // Remove the "visited" class from all cells
+  const cells = document.querySelectorAll(".cell");
+  for (let i = 0; i < cells.length; i++) {
+    cells[i].classList.remove("visited");
+  }
+}
+
+function getUnvisitedNeighbors(cell) {
+    const { row, col } = getCellPosition(cell);
+    const neighbors = [];
+  
+    // Check the north neighbor
+    if (row > 0 && !mazeGrid[row - 1][col].classList.contains("visited")) {
+      neighbors.push(mazeGrid[row - 1][col]);
+    }
+  
+    // Check the east neighbor
+    if (col < MAZE_WIDTH - 1 && !mazeGrid[row][col + 1].classList.contains("visited")) {
+      neighbors.push(mazeGrid[row][col + 1]);
+    }
+  
+    // Check the south neighbor
+    if (row < MAZE_HEIGHT - 1 && !mazeGrid[row + 1][col].classList.contains("visited")) {
+      neighbors.push(mazeGrid[row + 1][col]);
+    }
+  
+    // Check the west neighbor
+    if (col > 0 && !mazeGrid[row][col - 1].classList.contains("visited")) {
+      neighbors.push(mazeGrid[row][col - 1]);
+    }
+  
+    return neighbors;
+  }
+  
+
+  function getCellPosition(cell) {
+    const row = parseInt(cell.style.top) / CELL_SIZE;
+    const col = parseInt(cell.style.left) / CELL_SIZE;
+    return { row, col };
+  }
+
+  function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+function dfs(startCell) {
+    const stack = [startCell];
+    while (stack.length > 0) {
+      const currentCell = stack.pop();
+      if (!currentCell.classList.contains("visited")) {
+        currentCell.classList.add("visited");
+        const neighbors = getUnvisitedNeighbors(currentCell);
+        shuffle(neighbors);
+        for (const neighbor of neighbors) {
+          stack.push(neighbor);
+        }
+      }
+    }
+  }
+  async function dfs(startCell) {
+    const stack = [startCell];
+    while (stack.length > 0) {
+      const currentCell = stack.pop();
+      if (!currentCell.classList.contains("visited")) {
+        currentCell.classList.add("visited");
+        const neighbors = getUnvisitedNeighbors(currentCell);
+        shuffle(neighbors);
+        for (const neighbor of neighbors) {
+          stack.push(neighbor);
+        }
+  
+        // Wait for a short delay before moving on to the next step
+        await new Promise(resolve => setTimeout(resolve, 10));
+      }
+    }
+  }
+  
+  
   // TODO: Generate the maze using DFS algorithm
   /*Set a random starting cell in the grid.
     Push the starting cell to the stack.
@@ -79,7 +162,10 @@ function generateMaze() {
     neighboring cell that has not been visited.
     c. Push all unvisited neighboring cells to the stack.
     Repeat until all cells have been visited.*/
-}
+
 
 // Add an event listener to the "Generate Maze" button
 generateButton.addEventListener("click", generateMaze);
+solveButton.addEventListener("click", () => {
+  dfs(startCell);
+});
