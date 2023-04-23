@@ -7,14 +7,20 @@ body {
     text-align: center;
     margin-top: 50px;
   }
+
+  #buttonplace{
+    display: flex;
+    justify-content: center;
+  }
   
   #maze-container {
     position: relative;
-    margin: 50px auto;
-    width: 800px;
-    height: 800px;
-    border: 1px solid black;
+    margin-left: 22%;
+    width: 50%;
+    height: 50%;
+
   }
+  
   
   .cell {
     position: absolute;
@@ -25,7 +31,9 @@ body {
   /* Add some styles for the buttons */
   button {
     display: block;
-    margin: 20px auto;
+    margin-left: 2%;
+    margin-right: 5%;
+    margin-bottom: 2%;
     padding: 10px 20px;
     font-size: 18px;
     border-radius: 5px;
@@ -83,3 +91,40 @@ body {
   .unvisited{
     background-color: rgb(240, 159, 163);
   }
+
+.item1 { 
+  text-indent: -2%;
+  grid-area: start; 
+}
+
+.item2 { 
+  text-indent: -1.7%;
+  grid-area: end; 
+}
+
+.item3 { 
+  text-indent: -6%;
+  grid-area: block; 
+}
+
+.item4 { 
+  text-indent: -6%;
+  grid-area: visit; 
+}
+
+.item5 { 
+  text-indent: -2%;
+  grid-area: path; 
+}
+
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    'start end block visit path'
+    'start end block visit path';
+  justify-items: center;
+  align-items: center;
+  margin-left: 5%;
+  margin-right: 5%;
+  width: fit-content;
+}

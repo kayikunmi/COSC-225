@@ -8,30 +8,37 @@
   </head>
   <body>
     <h1>Maze Generator</h1>
-    <button id="generate-btn">Generate Maze</button>
-    <button id="solve-btn">Solve Maze</button>
+    <div id="buttonplace">
+      <button id="generate-btn">Generate Maze</button>
+      <button id="solve-btn">Solve Maze</button>
+    </div>
 
-    <div id="instructions">
-      <p class="instruction-text">Start Cell</p>
-      <svg>
-        <rect width="45" height="45" style="fill:rgb(95, 184, 123)" />
-      </svg>
-      <p class="instruction-text">End Cell</p>
-      <svg>
-        <rect width="45" height="45" style="fill:rgb(93, 136, 245)" />
-      </svg>
-      <p class="instruction-text">Blocked Cells</p>
-      <svg>
-        <rect width="45" height="45" style="fill:rgb(0,0,0)" />
-      </svg>
-      <p class="instruction-text">Visited Cells</p>
-      <svg>
-        <rect width="45" height="45" style="fill:rgb(87, 156, 152)" />
-      </svg>
-      <p class="instruction-text">Cell Path</p>
-      <svg>
-        <rect width="45" height="45" style="fill:rgb(240, 159, 163)" />
-      </svg>
+    <div class="grid-container">
+      <div class="item1">Start Cell
+        <svg>
+          <rect width="45" height="45" style="fill:rgb(95, 184, 123)" />
+        </svg>
+      </div>
+      <div class="item2">End Cell
+        <svg>
+          <rect width="45" height="45" style="fill:rgb(93, 136, 245)" />
+        </svg>
+      </div>
+      <div class="item3">Blocked Cells
+        <svg>
+          <rect width="45" height="45" style="fill:rgb(0,0,0)" />
+        </svg>
+      </div>  
+      <div class="item4">Visited Cells
+        <svg>
+          <rect width="45" height="45" style="fill:rgb(87, 156, 152)" />
+        </svg>
+      </div>
+      <div class="item5">Cell Path
+        <svg>
+          <rect width="45" height="45" style="fill:rgb(240, 159, 163)" />
+        </svg>
+      </div>
     </div>
     
     <div id="maze-container">
