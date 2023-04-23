@@ -118,13 +118,12 @@ function solveMaze() {
   dfs(startCell);
 
   // Add the unvisited class to all non-blocked cells
-const allCells = document.querySelectorAll('.cell');
-for (let cell of allCells) {
-  if (!cell.classList.contains('blocked') && !cell.classList.contains('path') && cell !== startCell && cell !== endCell) {
-    cell.classList.add('unvisited');
+  const allCells = document.querySelectorAll('.cell');
+  for (let cell of allCells) {
+    if (!cell.classList.contains('blocked') && !cell.classList.contains('path') && cell !== startCell && cell !== endCell) {
+      cell.classList.add('unvisited');
+    }
   }
-}
-
   
 }
 
