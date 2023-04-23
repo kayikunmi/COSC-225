@@ -50,7 +50,7 @@ function generateMaze() {
       mazeContainer.appendChild(cell);
 
       // Randomly decide if the cell should be blocked or not
-      if (Math.random() < 0.3) { // adjust probability as desired
+      if (Math.random() < 0.2) { // adjust probability as desired
         cell.classList.add("blocked");
       }
 
@@ -116,6 +116,16 @@ function solveMaze() {
 
   // Start DFS from the start cell
   dfs(startCell);
+
+  // Add the unvisited class to all non-blocked cells
+const allCells = document.querySelectorAll('.cell');
+for (let cell of allCells) {
+  if (!cell.classList.contains('blocked') && !cell.classList.contains('path') && cell !== startCell && cell !== endCell) {
+    cell.classList.add('unvisited');
+  }
+}
+
+  
 }
 
 // Define a helper function to get the neighbors of a cell

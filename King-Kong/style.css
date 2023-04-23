@@ -68,3 +68,6 @@ body {
   .path{
     background-color: rgb(225, 135, 135);
   }
+  .unvisited{
+    background-color: rgb(255, 214, 67);
+  }
