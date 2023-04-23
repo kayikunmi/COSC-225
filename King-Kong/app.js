@@ -66,6 +66,7 @@ function generateMaze() {
 
   // Mark the start and end cells
   startCell.classList.add("start");
+  startCell.setAttribute('id', 'start');
   endCell.classList.add("end");
   // Mark the start cell as visited and generate the maze using DFS algorithm
   startCell.classList.add("visited");
@@ -79,32 +80,32 @@ function generateMaze() {
 }
 
 function getUnvisitedNeighbors(cell) {
-    const { row, col } = getCellPosition(cell);
-    const neighbors = [];
-  
-    // Check the north neighbor if it is not blocked and unvisited
-    if (row > 0 && !mazeGrid[row - 1][col].classList.contains("visited") && !mazeGrid[row - 1][col].classList.contains("blocked")) {
-      neighbors.push(mazeGrid[row - 1][col]);
-    }
-  
-    // Check the east neighbor if it is not blocked and unvisited
-    if (col < MAZE_WIDTH - 1 && !mazeGrid[row][col + 1].classList.contains("visited") && !mazeGrid[row][col + 1].classList.contains("blocked")) {
-      neighbors.push(mazeGrid[row][col + 1]);
-    }
-  
-    // Check the south neighbor if it is not blocked and unvisited
-    if (row < MAZE_HEIGHT - 1 && !mazeGrid[row + 1][col].classList.contains("visited") && !mazeGrid[row + 1][col].classList.contains("blocked")) {
-      neighbors.push(mazeGrid[row + 1][col]);
-    }
-  
-    // Check the west neighbor if it is not blocked and unvisited
-    if (col > 0 && !mazeGrid[row][col - 1].classList.contains("visited") && !mazeGrid[row][col - 1].classList.contains("blocked")) {
-      neighbors.push(mazeGrid[row][col - 1]);
-    }
-  
-    return neighbors;
+  const { row, col } = getCellPosition(cell);
+  const neighbors = [];
+
+  // Check the north neighbor if it is not blocked and unvisited
+  if (row > 0 && !mazeGrid[row - 1][col].classList.contains("visited") && !mazeGrid[row - 1][col].classList.contains("blocked") && mazeGrid[row - 1][col] !== startCell && mazeGrid[row - 1][col] !== endCell) {
+    neighbors.push(mazeGrid[row - 1][col]);
   }
-  
+
+  // Check the east neighbor if it is not blocked and unvisited
+  if (col < MAZE_WIDTH - 1 && !mazeGrid[row][col + 1].classList.contains("visited") && !mazeGrid[row][col + 1].classList.contains("blocked") && mazeGrid[row][col + 1] !== startCell && mazeGrid[row][col + 1] !== endCell) {
+    neighbors.push(mazeGrid[row][col + 1]);
+  }
+
+  // Check the south neighbor if it is not blocked and unvisited
+  if (row < MAZE_HEIGHT - 1 && !mazeGrid[row + 1][col].classList.contains("visited") && !mazeGrid[row + 1][col].classList.contains("blocked") && mazeGrid[row + 1][col] !== startCell && mazeGrid[row + 1][col] !== endCell) {
+    neighbors.push(mazeGrid[row + 1][col]);
+  }
+
+  // Check the west neighbor if it is not blocked and unvisited
+  if (col > 0 && !mazeGrid[row][col - 1].classList.contains("visited") && !mazeGrid[row][col - 1].classList.contains("blocked") && mazeGrid[row][col - 1] !== startCell && mazeGrid[row][col - 1] !== endCell) {
+    neighbors.push(mazeGrid[row][col - 1]);
+  }
+
+  return neighbors;
+}
+
   
 
   function getCellPosition(cell) {
@@ -125,28 +126,27 @@ function dfs(startCell) {
   const visited = new Set();
   const paths = new Map();
   visited.add(startCell);
+  startCell.parent = null; // set the parent of the start cell to null
   while (stack.length > 0) {
     const currentCell = stack.pop();
-    if (currentCell === endCell) {
-      // Build path
-      let pathCell = currentCell;
-      while (pathCell !== startCell) {
-        pathCell.classList.add("path");
-        pathCell = paths.get(pathCell);
-      }
-      return;
-    }
+    // if (currentCell === endCell) {
+    //   // Build path
+    //   let path;
+    //   return path;
+    // }
     const neighbors = getUnvisitedNeighbors(currentCell);
     shuffle(neighbors);
     for (const neighbor of neighbors) {
-      if (!visited.has(neighbor)) {
-        visited.add(neighbor);
-        paths.set(neighbor, currentCell);
-        stack.push(neighbor);
+      if (neighbor === startCell || neighbor === endCell) { // skip the start and end cells
+        continue;
       }
+      visited.add(neighbor);
+      stack.push(neighbor);
+      neighbor.parent = currentCell;
     }
   }
 }
+
 
 async function dfs(startCell) {
   const stack = [startCell];
