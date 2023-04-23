@@ -28,7 +28,6 @@ body {
     border: 1px solid black;
   }
   
-  /* Add some styles for the buttons */
   button {
     display: block;
     margin-left: 2%;
@@ -108,20 +107,20 @@ body {
 }
 
 .item4 { 
-  text-indent: -6%;
-  grid-area: visit; 
+  text-indent: -2%;
+  grid-area: path; 
 }
 
 .item5 { 
-  text-indent: -2%;
-  grid-area: path; 
+  text-indent: -6%;
+  grid-area: visit; 
 }
 
 .grid-container {
   display: grid;
   grid-template-areas:
-    'start end block visit path'
-    'start end block visit path';
+    'start end block path visit'
+    'start end block path visit';
   justify-items: center;
   align-items: center;
   margin-left: 5%;
