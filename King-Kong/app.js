@@ -78,6 +78,8 @@ function generateMaze() {
   startCell.setAttribute('id', 'start');
   endCell.classList.add("end");
   endCell.setAttribute('id', 'end');
+
+  console.log("Generated Maze");
 }
 
 
@@ -125,6 +127,7 @@ function solveMaze() {
     }
   }
   
+  console.log("Solved Maze");
 }
 
 // Define a helper function to get the neighbors of a cell

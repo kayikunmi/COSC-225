@@ -67,7 +67,7 @@ body {
   }
   
   .blocked {
-    background-color: black;
+    background-color: rgb(114, 114, 114);
   }
   
   .start {
