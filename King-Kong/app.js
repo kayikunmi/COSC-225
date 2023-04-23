@@ -121,52 +121,50 @@ function getUnvisitedNeighbors(cell) {
 }
 
 function dfs(startCell) {
-    const stack = [startCell];
-    const visited = new Set();
-    const paths = new Map();
-    visited.add(startCell);
-    while (stack.length > 0) {
-        const currentCell = stack.pop();
-        if (currentCell === endCell) {
-            // Build path
-            let pathCell = currentCell;
-            while (pathCell !== startCell) {
-                pathCell.classList.add("path");
-                pathCell = paths.get(pathCell);
-            }
-            break;
-        }
-        const neighbors = getUnvisitedNeighbors(currentCell);
-        shuffle(neighbors);
-        for (const neighbor of neighbors) {
-            if (!visited.has(neighbor)) {
-                visited.add(neighbor);
-                paths.set(neighbor, currentCell);
-                stack.push(neighbor);
-            }
-        }
+  const stack = [startCell];
+  const visited = new Set();
+  const paths = new Map();
+  visited.add(startCell);
+  while (stack.length > 0) {
+    const currentCell = stack.pop();
+    if (currentCell === endCell) {
+      // Build path
+      let pathCell = currentCell;
+      while (pathCell !== startCell) {
+        pathCell.classList.add("path");
+        pathCell = paths.get(pathCell);
+      }
+      return;
     }
-}
-
-  
-  
-  async function dfs(startCell) {
-    const stack = [startCell];
-    while (stack.length > 0) {
-      const currentCell = stack.pop();
-      if (!currentCell.classList.contains("visited")) {
-        currentCell.classList.add("visited");
-        const neighbors = getUnvisitedNeighbors(currentCell);
-        shuffle(neighbors);
-        for (const neighbor of neighbors) {
-          stack.push(neighbor);
-        }
-  
-        // Wait for a short delay before moving on to the next step
-        await new Promise(resolve => setTimeout(resolve, 10));
+    const neighbors = getUnvisitedNeighbors(currentCell);
+    shuffle(neighbors);
+    for (const neighbor of neighbors) {
+      if (!visited.has(neighbor)) {
+        visited.add(neighbor);
+        paths.set(neighbor, currentCell);
+        stack.push(neighbor);
       }
     }
-  }  
+  }
+}
+
+async function dfs(startCell) {
+  const stack = [startCell];
+  while (stack.length > 0) {
+    const currentCell = stack.pop();
+    if (!currentCell.classList.contains("visited")) {
+      currentCell.classList.add("visited");
+      const neighbors = getUnvisitedNeighbors(currentCell);
+      shuffle(neighbors);
+      for (const neighbor of neighbors) {
+        stack.push(neighbor);
+      }
+  
+      // Wait for a short delay before moving on to the next step
+      await new Promise(resolve => setTimeout(resolve, 10));
+    }
+  }
+}  
 
 // Add an event listener to the "Generate Maze" button
 generateButton.addEventListener("click", generateMaze);
