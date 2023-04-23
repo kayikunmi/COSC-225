@@ -65,12 +65,6 @@ body {
     background-color: blue;
   }
 
-  .visited{
+  .path{
     background-color: rgb(225, 135, 135);
   }
-
-  .path{
-    background-color: rgb(237, 216, 85);
-  }
-
-  

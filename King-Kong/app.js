@@ -3,6 +3,11 @@ const mazeContainer = document.getElementById("maze-container");
 const generateButton = document.getElementById("generate-btn");
 const solveButton = document.getElementById("solve-btn");
 
+// Add an event listener to the "Generate Maze" button
+generateButton.addEventListener("click", generateMaze);
+solveButton.addEventListener("click", solveMaze);
+
+
 // Set up variables for the maze dimensions and cell size
 const MAZE_WIDTH = 30;
 const MAZE_HEIGHT = 30;
@@ -37,6 +42,10 @@ function generateMaze() {
       cell.style.width = CELL_SIZE + "px";
       cell.style.height = CELL_SIZE + "px";
 
+      // Add the data-row and data-col attributes to the cell
+      cell.setAttribute("data-row", row);
+      cell.setAttribute("data-col", col);
+
       // Add the cell to the maze container
       mazeContainer.appendChild(cell);
 
@@ -68,106 +77,66 @@ function generateMaze() {
   startCell.classList.add("start");
   startCell.setAttribute('id', 'start');
   endCell.classList.add("end");
-  // Mark the start cell as visited and generate the maze using DFS algorithm
-  startCell.classList.add("visited");
-  dfs(startCell);
-  // Remove the "visited" class from all cells
-  const cells = document.querySelectorAll(".cell");
-  for (let i = 0; i < cells.length; i++) {
-        cells[i].classList.remove("visited");
-    }
-
+  endCell.setAttribute('id', 'end');
 }
 
-function getUnvisitedNeighbors(cell) {
-  const { row, col } = getCellPosition(cell);
+
+function solveMaze() {
+  // Mark all cells as unvisited
+  const visited = new Array(MAZE_HEIGHT);
+  for (let i = 0; i < MAZE_HEIGHT; i++) {
+    visited[i] = new Array(MAZE_WIDTH).fill(false);
+  }
+
+  // Define a helper function to perform DFS
+  function dfs(currentCell) {
+    // Mark the current cell as visited
+    visited[currentCell.dataset.row][currentCell.dataset.col] = true;
+
+    // If the current cell is the end cell, return true to indicate that the maze is solved
+    if (currentCell === endCell) {
+      return true;
+    }
+
+    // Check the neighbors of the current cell
+    const neighbors = getNeighbors(currentCell);
+    for (let neighbor of neighbors) {
+      if (!visited[neighbor.dataset.row][neighbor.dataset.col]) {
+        if (dfs(neighbor)) {
+          // If DFS finds a path to the end cell, mark the current cell as part of the solution path and return true
+          currentCell.classList.add("path");
+          return true;
+        }
+      }
+    }
+
+    // If no path to the end cell is found, return false
+    return false;
+  }
+
+  // Start DFS from the start cell
+  dfs(startCell);
+}
+
+// Define a helper function to get the neighbors of a cell
+function getNeighbors(cell) {
   const neighbors = [];
+  const row = parseInt(cell.dataset.row);
+  const col = parseInt(cell.dataset.col);
 
-  // Check the north neighbor if it is not blocked and unvisited
-  if (row > 0 && !mazeGrid[row - 1][col].classList.contains("visited") && !mazeGrid[row - 1][col].classList.contains("blocked") && mazeGrid[row - 1][col] !== startCell && mazeGrid[row - 1][col] !== endCell) {
-    neighbors.push(mazeGrid[row - 1][col]);
+  if (row > 0 && !mazeGrid[row-1][col].classList.contains("blocked")) {
+    neighbors.push(mazeGrid[row-1][col]);
   }
-
-  // Check the east neighbor if it is not blocked and unvisited
-  if (col < MAZE_WIDTH - 1 && !mazeGrid[row][col + 1].classList.contains("visited") && !mazeGrid[row][col + 1].classList.contains("blocked") && mazeGrid[row][col + 1] !== startCell && mazeGrid[row][col + 1] !== endCell) {
-    neighbors.push(mazeGrid[row][col + 1]);
+  if (col < MAZE_WIDTH - 1 && !mazeGrid[row][col+1].classList.contains("blocked")) {
+    neighbors.push(mazeGrid[row][col+1]);
   }
-
-  // Check the south neighbor if it is not blocked and unvisited
-  if (row < MAZE_HEIGHT - 1 && !mazeGrid[row + 1][col].classList.contains("visited") && !mazeGrid[row + 1][col].classList.contains("blocked") && mazeGrid[row + 1][col] !== startCell && mazeGrid[row + 1][col] !== endCell) {
-    neighbors.push(mazeGrid[row + 1][col]);
+  if (row < MAZE_HEIGHT - 1 && !mazeGrid[row+1][col].classList.contains("blocked")) {
+    neighbors.push(mazeGrid[row+1][col]);
   }
-
-  // Check the west neighbor if it is not blocked and unvisited
-  if (col > 0 && !mazeGrid[row][col - 1].classList.contains("visited") && !mazeGrid[row][col - 1].classList.contains("blocked") && mazeGrid[row][col - 1] !== startCell && mazeGrid[row][col - 1] !== endCell) {
-    neighbors.push(mazeGrid[row][col - 1]);
+  if (col > 0 && !mazeGrid[row][col-1].classList.contains("blocked")) {
+    neighbors.push(mazeGrid[row][col-1]);
   }
 
   return neighbors;
 }
 
-  
-
-  function getCellPosition(cell) {
-    const row = parseInt(cell.style.top) / CELL_SIZE;
-    const col = parseInt(cell.style.left) / CELL_SIZE;
-    return { row, col };
-  }
-
-  function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-}
-
-function dfs(startCell) {
-  const stack = [startCell];
-  const visited = new Set();
-  const paths = new Map();
-  visited.add(startCell);
-  startCell.parent = null; // set the parent of the start cell to null
-  while (stack.length > 0) {
-    const currentCell = stack.pop();
-    // if (currentCell === endCell) {
-    //   // Build path
-    //   let path;
-    //   return path;
-    // }
-    const neighbors = getUnvisitedNeighbors(currentCell);
-    shuffle(neighbors);
-    for (const neighbor of neighbors) {
-      if (neighbor === startCell || neighbor === endCell) { // skip the start and end cells
-        continue;
-      }
-      visited.add(neighbor);
-      stack.push(neighbor);
-      neighbor.parent = currentCell;
-    }
-  }
-}
-
-
-async function dfs(startCell) {
-  const stack = [startCell];
-  while (stack.length > 0) {
-    const currentCell = stack.pop();
-    if (!currentCell.classList.contains("visited")) {
-      currentCell.classList.add("visited");
-      const neighbors = getUnvisitedNeighbors(currentCell);
-      shuffle(neighbors);
-      for (const neighbor of neighbors) {
-        stack.push(neighbor);
-      }
-  
-      // Wait for a short delay before moving on to the next step
-      await new Promise(resolve => setTimeout(resolve, 10));
-    }
-  }
-}  
-
-// Add an event listener to the "Generate Maze" button
-generateButton.addEventListener("click", generateMaze);
-solveButton.addEventListener("click", () => {
-  dfs(startCell);
-});
