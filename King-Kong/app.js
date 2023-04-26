@@ -98,7 +98,7 @@ function solveMaze() {
   let iteration = 0;
 
   // Define a helper function to perform one step of DFS
-  function dfsStep() {
+  function dfs() {
     // Check if the stack is empty or the maximum number of iterations has been reached
     if (stack.length === 0 || iteration >= maxIterations) {
       // Add the unvisited class to all non-blocked cells
@@ -141,8 +141,8 @@ function solveMaze() {
     iteration++;
   }
 
-  // Call the dfsStep function every 100 milliseconds
-  const intervalId = setInterval(dfsStep, 100);
+  // Call the dfs function every 100 milliseconds
+  const intervalId = setInterval(dfs, 50);
 }
 
 
@@ -153,16 +153,16 @@ function getNeighbors(cell) {
   const col = parseInt(cell.dataset.col);
 
   if (row > 0 && !mazeGrid[row-1][col].classList.contains("blocked")) {
-    neighbors.push(mazeGrid[row-1][col]);
+    neighbors.push(mazeGrid[row-1][col]); //under
   }
   if (col < MAZE_WIDTH - 1 && !mazeGrid[row][col+1].classList.contains("blocked")) {
-    neighbors.push(mazeGrid[row][col+1]);
+    neighbors.push(mazeGrid[row][col+1]); //right
   }
   if (row < MAZE_HEIGHT - 1 && !mazeGrid[row+1][col].classList.contains("blocked")) {
-    neighbors.push(mazeGrid[row+1][col]);
+    neighbors.push(mazeGrid[row+1][col]); //above
   }
   if (col > 0 && !mazeGrid[row][col-1].classList.contains("blocked")) {
-    neighbors.push(mazeGrid[row][col-1]);
+    neighbors.push(mazeGrid[row][col-1]); //left
   }
 
   return neighbors;
