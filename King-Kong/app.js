@@ -50,7 +50,7 @@ function generateMaze() {
       mazeContainer.appendChild(cell);
 
       // Randomly decide if the cell should be blocked or not
-      if (Math.random() < 0.2) { // adjust probability as desired
+      if (Math.random() < 0.3) { // adjust probability as desired
         cell.classList.add("blocked");
       }
 
@@ -142,7 +142,7 @@ function solveMaze() {
   }
 
   // Call the dfs function every 100 milliseconds
-  const intervalId = setInterval(dfs, 50);
+  const intervalId = setInterval(dfs, 2);
 }
 
 
@@ -152,19 +152,27 @@ function getNeighbors(cell) {
   const row = parseInt(cell.dataset.row);
   const col = parseInt(cell.dataset.col);
 
+  // Check neighbor above
   if (row > 0 && !mazeGrid[row-1][col].classList.contains("blocked")) {
-    neighbors.push(mazeGrid[row-1][col]); //under
+    neighbors.push(mazeGrid[row-1][col]);
   }
+
+  // Check neighbor to the right
   if (col < MAZE_WIDTH - 1 && !mazeGrid[row][col+1].classList.contains("blocked")) {
-    neighbors.push(mazeGrid[row][col+1]); //right
+    neighbors.push(mazeGrid[row][col+1]);
   }
+
+  // Check neighbor below
   if (row < MAZE_HEIGHT - 1 && !mazeGrid[row+1][col].classList.contains("blocked")) {
-    neighbors.push(mazeGrid[row+1][col]); //above
+    neighbors.push(mazeGrid[row+1][col]);
   }
+
+  // Check neighbor to the left
   if (col > 0 && !mazeGrid[row][col-1].classList.contains("blocked")) {
-    neighbors.push(mazeGrid[row][col-1]); //left
+    neighbors.push(mazeGrid[row][col-1]);
   }
 
   return neighbors;
 }
+
 
