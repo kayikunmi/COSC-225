@@ -90,45 +90,61 @@ function solveMaze() {
     visited[i] = new Array(MAZE_WIDTH).fill(false);
   }
 
-  // Define a helper function to perform DFS
-  function dfs(currentCell) {
+  // Initialize the stack with the starting cell
+  const stack = [startCell];
+
+  // Set a maximum number of iterations
+  const maxIterations = 1000;
+  let iteration = 0;
+
+  // Define a helper function to perform one step of DFS
+  function dfsStep() {
+    // Check if the stack is empty or the maximum number of iterations has been reached
+    if (stack.length === 0 || iteration >= maxIterations) {
+      // Add the unvisited class to all non-blocked cells
+      const allCells = document.querySelectorAll('.cell');
+      for (let cell of allCells) {
+        if (!cell.classList.contains('blocked') && !cell.classList.contains('path') && cell !== startCell && cell !== endCell) {
+          cell.classList.add('unvisited');
+        }
+      }
+      console.log("Maze solved or maximum number of iterations reached");
+      clearInterval(intervalId);
+      return;
+    }
+
+    // Get the next cell from the stack
+    const currentCell = stack.pop();
+
     // Mark the current cell as visited
     visited[currentCell.dataset.row][currentCell.dataset.col] = true;
 
-    // If the current cell is the end cell, return true to indicate that the maze is solved
+    // If the current cell is the end cell, mark it as part of the solution path and return true
     if (currentCell === endCell) {
-      return true;
+      currentCell.classList.add("path");
+      console.log("Maze solved");
+      clearInterval(intervalId);
+      return;
     }
 
     // Check the neighbors of the current cell
     const neighbors = getNeighbors(currentCell);
     for (let neighbor of neighbors) {
       if (!visited[neighbor.dataset.row][neighbor.dataset.col]) {
-        if (dfs(neighbor)) {
-          // If DFS finds a path to the end cell, mark the current cell as part of the solution path and return true
-          currentCell.classList.add("path");
-          return true;
-        }
+        // Add the neighbor to the stack
+        stack.push(neighbor);
       }
     }
 
-    // If no path to the end cell is found, return false
-    return false;
+    // Mark the current cell as part of the solution path
+    currentCell.classList.add("path");
+    iteration++;
   }
 
-  // Start DFS from the start cell
-  dfs(startCell);
-
-  // Add the unvisited class to all non-blocked cells
-  const allCells = document.querySelectorAll('.cell');
-  for (let cell of allCells) {
-    if (!cell.classList.contains('blocked') && !cell.classList.contains('path') && cell !== startCell && cell !== endCell) {
-      cell.classList.add('unvisited');
-    }
-  }
-  
-  console.log("Solved Maze");
+  // Call the dfsStep function every 100 milliseconds
+  const intervalId = setInterval(dfsStep, 100);
 }
+
 
 // Define a helper function to get the neighbors of a cell
 function getNeighbors(cell) {
