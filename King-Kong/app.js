@@ -142,7 +142,7 @@ function solveMaze() {
   }
 
   // Call the dfs function every 100 milliseconds
-  const intervalId = setInterval(dfs, 2);
+  const intervalId = setInterval(dfs, 10);
 }
 
 

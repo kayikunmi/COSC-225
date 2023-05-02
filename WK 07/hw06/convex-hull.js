@@ -2,11 +2,13 @@ const SVG_NS = "http://www.w3.org/2000/svg";
 const SVG_WIDTH = 600;
 const SVG_HEIGHT = 400;
 
+if (typeof document !== 'undefined') {
 //global eventlistener for the button to call the step function
 let chb = document.querySelector("#convex-hull-box"); //my svg
 let set = new PointSet(); //my ps
 let chv = new ConvexHullViewer(chb, set); //the viewer containing svg and ps
 let inst = new ConvexHull(set, chv); //the instance that has ps and viewer
+}
 
 // An object that represents a 2-d point, consisting of an
 // x-coordinate and a y-coordinate. The `compareTo` function
@@ -147,7 +149,7 @@ function ConvexHullViewer(svg, ps) {
   };
 
   this.clickDot = function (dot) {
-    //console.log("You clicked this dot " + dot.id);
+    console.log("You clicked this dot " + dot.id);
   }
 
   this.addLine = function (a,b) {
@@ -156,24 +158,22 @@ function ConvexHullViewer(svg, ps) {
     line.setAttributeNS(null, "y1", a.y);
     line.setAttributeNS(null, "x2", b.x);
     line.setAttributeNS(null, "y2", b.y);
-    this.lines.push(line);
     line.id = this.nextID;
+    this.lines.push(line.id);
     this.nextID++;
     line.classList.add("line");
     this.svg.appendChild(line);
-    //console.log("line added");
-    //console.log(a);
-    //console.log(b);
   }
 
-  this.removeLine = function(line) {
-    if(Line(a,b,id)){
-      let rem = line; 
-    } else{
-    return //console.log("nothing");
-    }
+  this.changeLine = function (a,b) {
+    const change = document.createElementNS(SVG_NS, "line");
+    change.setAttributeNS(null, "x1", a.x); //set its points
+    change.setAttributeNS(null, "y1", a.y);
+    change.setAttributeNS(null, "x2", b.x);
+    change.setAttributeNS(null, "y2", b.y);
+    change.classList.add("change");
+    this.svg.appendChild(change);
   }
-
 }
 
 function Line(a,b,id){
@@ -209,44 +209,27 @@ function ConvexHull(ps, viewer) {
 
   this.start = function () {
     this.stack = [];
-    console.log("ps before sort: " + ps);
-    let nps = new PointSet();
-    nps = this.getConvexHull();
-    this.ps = this.getConvexHull();
-    //how can i change ps to become nps
-    ps = nps;
-    console.log("nps: " + nps);
-    console.log("ps after sort: " + ps);
+    this.ps.sort();
     this.a = ps.points[0];
     this.b = ps.points[1];
     this.c = ps.points[2];
     this.counter = 3;
-    //console.log("Click to start");
+    console.log("Click to start");
     
   }
   // perform a single step of the Graham scan algorithm performed on ps
   this.step = function () {
-    ps.sort();
     if (this.stack.length == 0) {
       this.stack.push(this.a);
       this.stack.push(this.b);
       this.viewer.addLine(this.a, this.b);
-      console.log("wtf");
-      //console.log("this is a = " + this.a);
-      //console.log("this is b = " + this.b);
-    } else if (!cross(this.a, this.b, this.c) && ps.size() > 1) {
-      this.stack.pop();
-      this.viewer.removeLine(Line(this.a,this.b,this.id));
+    } else if (cross(this.a, this.b, this.c)  < 0 && ps.size() > 1) {
+      this.viewer.changeLine(this.a,this.b);
       this.b = this.a;
       this.a = this.stack[this.stack.length - 2];
-      console.log("not right");
     } else {
       this.stack.push(this.c);
-      //before we add the line, let's check if it's going in the right direction
-      //if it's not, don't add the line
       this.viewer.addLine(this.b, this.c);
-      console.log("right");
-      //console.log(this.stack[this.stack.length -1]);
       this.b = this.stack[this.stack.length - 1];
       this.a = this.stack[this.stack.length - 2];      
       this.c = ps.points[this.counter];
@@ -255,11 +238,8 @@ function ConvexHull(ps, viewer) {
       else if(this.counter == ps.points.length - 1){
         this.counter = 0;
       }
-      //console.log("this is a = " + this.a);
-      //console.log("this is b = " + this.b);
-      //console.log("this is c = " + this.c);
-      //console.log(this.stack);
     }
+
   };
 
   // Return a new PointSet consisting of the points along the convex
@@ -324,6 +304,5 @@ try {
 exports.PointSet = PointSet;
 exports.ConvexHull = ConvexHull;
 } catch (e) {
-//console.log("not running in Node");
+console.log("not running in Node");
 }
-

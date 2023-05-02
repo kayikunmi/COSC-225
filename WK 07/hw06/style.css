@@ -13,10 +13,7 @@ svg{
   stroke: black;
   stroke-width: 5;
 }
-.removed{
-  stroke: gray;
-  stroke-width: 5;
-}
 .change{
-  fill:pink;
+  stroke:pink;
+  stroke-width: 6;
 }
