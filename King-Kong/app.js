@@ -1,11 +1,13 @@
 // Get the necessary DOM elements
 const mazeContainer = document.getElementById("maze-container");
 const generateButton = document.getElementById("generate-btn");
-const solveButton = document.getElementById("solve-btn");
+const dfsButton = document.getElementById("dfs-btn");
+const shortButton = document.getElementById("short-btn");
 
 // Add an event listener to the "Generate Maze" button
 generateButton.addEventListener("click", generateMaze);
-solveButton.addEventListener("click", solveMaze);
+dfsButton.addEventListener("click", dfsMaze);
+shortButton.addEventListener("click", shortMaze);
 
 
 // Set up variables for the maze dimensions and cell size
@@ -83,7 +85,7 @@ function generateMaze() {
 }
 
 
-function solveMaze() {
+function dfsMaze() {
   // Mark all cells as unvisited
   const visited = new Array(MAZE_HEIGHT);
   for (let i = 0; i < MAZE_HEIGHT; i++) {
@@ -108,7 +110,7 @@ function solveMaze() {
           cell.classList.add('unvisited');
         }
       }
-      console.log("Maze solved or maximum number of iterations reached");
+      console.log("Maze solved or maximum number of iterations reached with dfs");
       clearInterval(intervalId);
       return;
     }
@@ -122,7 +124,7 @@ function solveMaze() {
     // If the current cell is the end cell, mark it as part of the solution path and return true
     if (currentCell === endCell) {
       currentCell.classList.add("path");
-      console.log("Maze solved");
+      console.log("Maze solved with dfs");
       clearInterval(intervalId);
       return;
     }
@@ -145,6 +147,50 @@ function solveMaze() {
   const intervalId = setInterval(dfs, 10);
 }
 
+function shortMaze() {
+  // Mark all cells as unvisited
+  const visited = new Array(MAZE_HEIGHT);
+  for (let i = 0; i < MAZE_HEIGHT; i++) {
+    visited[i] = new Array(MAZE_WIDTH).fill(false);
+  }
+
+  // Initialize the queue with the starting cell
+  const queue = [startCell];
+
+  // Keep track of the parent of each cell
+  const parents = new Map();
+  parents.set(startCell, null);
+
+  // Explore the neighbors of the start cell using BFS
+  while (queue.length > 0) {
+    const currentCell = queue.shift();
+
+    if (currentCell === endCell) {
+      // If we've reached the end cell, construct the path by following the parent pointers
+      let current = endCell;
+      while (current !== startCell) {
+        current.classList.add("path");
+        current = parents.get(current);
+      }
+      startCell.classList.add("start");
+      endCell.classList.add("end");
+      console.log("Maze solved with short");
+      return;
+    }
+
+    const neighbors = getNeighbors(currentCell);
+    for (let neighbor of neighbors) {
+      if (!visited[neighbor.dataset.row][neighbor.dataset.col] && !neighbor.classList.contains("blocked")) {
+        queue.push(neighbor);
+        visited[neighbor.dataset.row][neighbor.dataset.col] = true;
+        parents.set(neighbor, currentCell);
+      }
+    }
+   
+  }
+
+  console.log("No solution found with short");
+}
 
 // Define a helper function to get the neighbors of a cell
 function getNeighbors(cell) {
