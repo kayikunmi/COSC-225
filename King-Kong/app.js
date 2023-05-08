@@ -106,8 +106,8 @@ function generateMaze() {
   endCell2.classList.add("end");
   endCell2.setAttribute('id', 'end');
 
-  // let maze2 = mazeContainer.cloneNode(true);
-  // mazeContainer2.appendChild(maze2);
+  console.log("generated dfs maze");
+  console.log("generated short maze")
 }
 
 
