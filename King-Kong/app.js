@@ -1,5 +1,5 @@
 // Get the necessary DOM elements
-const mazeContainer = document.getElementById("maze-container");
+const mazeContainer1 = document.getElementById("maze-container");
 const mazeContainer2 = document.getElementById("maze-container2");
 const generateButton = document.getElementById("generate-btn");
 const dfsButton = document.getElementById("dfs-btn");
@@ -17,48 +17,66 @@ const MAZE_HEIGHT = 30;
 const CELL_SIZE = 30;
 
 // Set up variables for the starting and ending cells
-let startCell, endCell;
+// Set up variables for the starting and ending cells
+let startCell1, endCell1, startCell2, endCell2;
 
-// Initialize the maze grid
-const mazeGrid = new Array(MAZE_HEIGHT);
+// Initialize the maze grids
+const mazeGrid1 = new Array(MAZE_HEIGHT);
 for (let i = 0; i < MAZE_HEIGHT; i++) {
-  mazeGrid[i] = new Array(MAZE_WIDTH);
+  mazeGrid1[i] = new Array(MAZE_WIDTH);
+}
+const mazeGrid2 = new Array(MAZE_HEIGHT);
+for (let i = 0; i < MAZE_HEIGHT; i++) {
+  mazeGrid2[i] = new Array(MAZE_WIDTH);
 }
 
-// Function to generate the maze
+// Function to generate the mazes
 function generateMaze() {
-  // Clear the maze container
-  mazeContainer.innerHTML = "";
+  // Clear the maze containers
+  mazeContainer1.innerHTML = "";
+  mazeContainer2.innerHTML = "";
 
-  // Generate the maze grid
+  // Generate the maze grids
   for (let row = 0; row < MAZE_HEIGHT; row++) {
     for (let col = 0; col < MAZE_WIDTH; col++) {
       // Create a div for the cell
-      const cell = document.createElement("div");
+      const cell1 = document.createElement("div");
+      const cell2 = document.createElement("div");
 
       // Set the cell's class to "cell"
-      cell.className = "cell";
+      cell1.className = "cell";
+      cell2.className = "cell";
 
       // Set the cell's position and size
-      cell.style.top = row * CELL_SIZE + "px";
-      cell.style.left = col * CELL_SIZE + "px";
-      cell.style.width = CELL_SIZE + "px";
-      cell.style.height = CELL_SIZE + "px";
+      cell1.style.top = row * CELL_SIZE + "px";
+      cell1.style.left = col * CELL_SIZE + "px";
+      cell1.style.width = CELL_SIZE + "px";
+      cell1.style.height = CELL_SIZE + "px";
 
-      // Add the data-row and data-col attributes to the cell
-      cell.setAttribute("data-row", row);
-      cell.setAttribute("data-col", col);
+      cell2.style.top = row * CELL_SIZE + "px";
+      cell2.style.left = col * CELL_SIZE + "px";
+      cell2.style.width = CELL_SIZE + "px";
+      cell2.style.height = CELL_SIZE + "px";
 
-      // Add the cell to the maze container
-      mazeContainer.appendChild(cell);
+      // Add the data-row and data-col attributes to the cells
+      cell1.setAttribute("data-row", row);
+      cell1.setAttribute("data-col", col);
+      cell2.setAttribute("data-row", row);
+      cell2.setAttribute("data-col", col);
+
+      // Add the cells to the maze containers
+      mazeContainer1.appendChild(cell1);
+      mazeContainer2.appendChild(cell2);
 
       // Randomly decide if the cell should be blocked or not
       if (Math.random() < 0.3) { // adjust probability as desired
-        cell.classList.add("blocked");
+        cell1.classList.add("blocked");
+        cell2.classList.add("blocked");
       }
 
       // Set the cell in the maze grid
-      mazeGrid[row][col] = cell;
+      mazeGrid1[row][col] = cell1;
+      mazeGrid2[row][col] = cell2;
     }
   }
 
@@ -66,24 +84,30 @@ function generateMaze() {
   do {
     const startRow = Math.floor(Math.random() * MAZE_HEIGHT);
     const startCol = Math.floor(Math.random() * MAZE_WIDTH);
-    startCell = mazeGrid[startRow][startCol];
-  } while (startCell.classList.contains("blocked"));
+    startCell1 = mazeGrid1[startRow][startCol];
+    startCell2 = mazeGrid2[startRow][startCol];
+  } while (startCell1.classList.contains("blocked") && startCell2.classList.contains("blocked"));
 
   // Choose a random ending cell that is not blocked and not the starting cell
   do {
     const endRow = Math.floor(Math.random() * MAZE_HEIGHT);
     const endCol = Math.floor(Math.random() * MAZE_WIDTH);
-    endCell = mazeGrid[endRow][endCol];
-  } while (endCell.classList.contains("blocked") || endCell === startCell);
+    endCell1 = mazeGrid1[endRow][endCol];
+    endCell2 = mazeGrid2[endRow][endCol];
+  } while ((endCell1.classList.contains("blocked") || endCell1 === startCell1) && (endCell2.classList.contains("blocked") || endCell2 === startCell2));
 
   // Mark the start and end cells
-  startCell.classList.add("start");
-  startCell.setAttribute('id', 'start');
-  endCell.classList.add("end");
-  endCell.setAttribute('id', 'end');
+  startCell1.classList.add("start");
+  startCell1.setAttribute('id', 'start');
+  endCell1.classList.add("end");
+  endCell1.setAttribute('id', 'end');
+  startCell2.classList.add("start");
+  startCell2.setAttribute('id', 'start');
+  endCell2.classList.add("end");
+  endCell2.setAttribute('id', 'end');
 
-  let maze2 = mazeContainer.cloneNode(true);
-  mazeContainer2.appendChild(maze2);
+  // let maze2 = mazeContainer.cloneNode(true);
+  // mazeContainer2.appendChild(maze2);
 }
 
 
@@ -95,7 +119,7 @@ function dfsMaze() {
   }
 
   // Initialize the stack with the starting cell
-  const stack = [startCell];
+  const stack = [startCell1];
 
   // Set a maximum number of iterations
   const maxIterations = 1000;
@@ -108,7 +132,7 @@ function dfsMaze() {
       // Add the unvisited class to all non-blocked cells
       const allCells = document.querySelectorAll('.cell');
       for (let cell of allCells) {
-        if (!cell.classList.contains('blocked') && !cell.classList.contains('path') && cell !== startCell && cell !== endCell) {
+        if (!cell.classList.contains('blocked') && !cell.classList.contains('path') && cell !== startCell1 && cell !== endCell1) {
           cell.classList.add('unvisited');
         }
       }
@@ -124,7 +148,7 @@ function dfsMaze() {
     visited[currentCell.dataset.row][currentCell.dataset.col] = true;
 
     // If the current cell is the end cell, mark it as part of the solution path and return true
-    if (currentCell === endCell) {
+    if (currentCell === endCell1) {
       currentCell.classList.add("path");
       console.log("Maze solved with dfs");
       clearInterval(intervalId);
@@ -157,25 +181,25 @@ function shortMaze() {
   }
 
   // Initialize the queue with the starting cell
-  const queue = [startCell];
+  const queue = [startCell2];
 
   // Keep track of the parent of each cell
   const parents = new Map();
-  parents.set(startCell, null);
+  parents.set(startCell2, null);
 
   // Explore the neighbors of the start cell using BFS
   while (queue.length > 0) {
     const currentCell = queue.shift();
 
-    if (currentCell === endCell) {
+    if (currentCell === endCell2) {
       // If we've reached the end cell, construct the path by following the parent pointers
-      let current = endCell;
-      while (current !== startCell) {
+      let current = endCell2;
+      while (current !== startCell2) {
         current.classList.add("path");
         current = parents.get(current);
       }
-      startCell.classList.add("start");
-      endCell.classList.add("end");
+      startCell2.classList.add("start");
+      endCell2.classList.add("end");
       console.log("Maze solved with short");
       return;
     }
@@ -201,23 +225,23 @@ function getNeighbors(cell) {
   const col = parseInt(cell.dataset.col);
 
   // Check neighbor above
-  if (row > 0 && !mazeGrid[row-1][col].classList.contains("blocked")) {
-    neighbors.push(mazeGrid[row-1][col]);
+  if (row > 0 && !mazeGrid1[row-1][col].classList.contains("blocked")) {
+    neighbors.push(mazeGrid1[row-1][col]);
   }
 
   // Check neighbor to the right
-  if (col < MAZE_WIDTH - 1 && !mazeGrid[row][col+1].classList.contains("blocked")) {
-    neighbors.push(mazeGrid[row][col+1]);
+  if (col < MAZE_WIDTH - 1 && !mazeGrid1[row][col+1].classList.contains("blocked")) {
+    neighbors.push(mazeGrid1[row][col+1]);
   }
 
   // Check neighbor below
-  if (row < MAZE_HEIGHT - 1 && !mazeGrid[row+1][col].classList.contains("blocked")) {
-    neighbors.push(mazeGrid[row+1][col]);
+  if (row < MAZE_HEIGHT - 1 && !mazeGrid1[row+1][col].classList.contains("blocked")) {
+    neighbors.push(mazeGrid1[row+1][col]);
   }
 
   // Check neighbor to the left
-  if (col > 0 && !mazeGrid[row][col-1].classList.contains("blocked")) {
-    neighbors.push(mazeGrid[row][col-1]);
+  if (col > 0 && !mazeGrid1[row][col-1].classList.contains("blocked")) {
+    neighbors.push(mazeGrid1[row][col-1]);
   }
 
   return neighbors;
