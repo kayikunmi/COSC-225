@@ -156,7 +156,7 @@ function dfsMaze() {
     }
 
     // Check the neighbors of the current cell
-    const neighbors = getNeighbors(currentCell);
+    const neighbors = getNeighbors1(currentCell);
     for (let neighbor of neighbors) {
       if (!visited[neighbor.dataset.row][neighbor.dataset.col]) {
         // Add the neighbor to the stack
@@ -204,7 +204,7 @@ function shortMaze() {
       return;
     }
 
-    const neighbors = getNeighbors(currentCell);
+    const neighbors = getNeighbors2(currentCell);
     for (let neighbor of neighbors) {
       if (!visited[neighbor.dataset.row][neighbor.dataset.col] && !neighbor.classList.contains("blocked")) {
         queue.push(neighbor);
@@ -219,7 +219,7 @@ function shortMaze() {
 }
 
 // Define a helper function to get the neighbors of a cell
-function getNeighbors(cell) {
+function getNeighbors1(cell) {
   const neighbors = [];
   const row = parseInt(cell.dataset.row);
   const col = parseInt(cell.dataset.col);
@@ -246,5 +246,31 @@ function getNeighbors(cell) {
 
   return neighbors;
 }
+function getNeighbors2(cell) {
+  const neighbors = [];
+  const row = parseInt(cell.dataset.row);
+  const col = parseInt(cell.dataset.col);
 
+  // Check neighbor above
+  if (row > 0 && !mazeGrid2[row-1][col].classList.contains("blocked")) {
+    neighbors.push(mazeGrid2[row-1][col]);
+  }
+
+  // Check neighbor to the right
+  if (col < MAZE_WIDTH - 1 && !mazeGrid2[row][col+1].classList.contains("blocked")) {
+    neighbors.push(mazeGrid2[row][col+1]);
+  }
+
+  // Check neighbor below
+  if (row < MAZE_HEIGHT - 1 && !mazeGrid2[row+1][col].classList.contains("blocked")) {
+    neighbors.push(mazeGrid2[row+1][col]);
+  }
+
+  // Check neighbor to the left
+  if (col > 0 && !mazeGrid2[row][col-1].classList.contains("blocked")) {
+    neighbors.push(mazeGrid2[row][col-1]);
+  }
+
+  return neighbors;
+}
 
