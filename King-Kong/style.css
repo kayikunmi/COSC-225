@@ -15,7 +15,14 @@ body {
   
   #maze-container {
     position: relative;
-    margin-left: 22%;
+    margin-left: 2%;
+    width: 50%;
+    height: 50%;
+
+  }
+  #maze-container2 {
+    position: relative;
+    margin-left: 95%;
     width: 50%;
     height: 50%;
 

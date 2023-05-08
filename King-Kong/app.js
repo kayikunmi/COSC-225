@@ -1,5 +1,6 @@
 // Get the necessary DOM elements
 const mazeContainer = document.getElementById("maze-container");
+const mazeContainer2 = document.getElementById("maze-container2");
 const generateButton = document.getElementById("generate-btn");
 const dfsButton = document.getElementById("dfs-btn");
 const shortButton = document.getElementById("short-btn");
@@ -81,7 +82,8 @@ function generateMaze() {
   endCell.classList.add("end");
   endCell.setAttribute('id', 'end');
 
-  console.log("Generated Maze");
+  let maze2 = mazeContainer.cloneNode(true);
+  mazeContainer2.appendChild(maze2);
 }
 
 
