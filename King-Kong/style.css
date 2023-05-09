@@ -1,5 +1,3 @@
-
-
 h1 {
   text-align: center;
   margin-top: 50px;
@@ -14,15 +12,15 @@ h1 {
 #maze-container {
   position: relative;
   margin-left: 22%;
-  width: 50%;
-  height: 50%;
+  /* width: 100%; */
+  /* height: 50%; */
 }
 
 #maze-container2 {
   position: relative;
   margin-left: 62%;
-  width: 50%;
-  height: 50%;
+  /* width: 100%; */
+  /* height: 50%; */
 }
 
 .cell {
@@ -33,7 +31,7 @@ h1 {
 
 button {
   display: block;
-  margin-left: 2%;
+  margin-left: 5%;
   margin-right: 5%;
   margin-bottom: 2%;
   padding: 10px 20px;
@@ -119,10 +117,16 @@ button:active {
   grid-template-areas:
     'start end block path visit'
     'start end block path visit';
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   justify-content: center;
   align-content: center;
   margin-left: 5%;
   margin-right: 5%;
-  width: 100vw;
+  /* margin-left: 5%;
+  margin-right: 5%;
+  /* width: 100vw; */
   position: relative;
+  grid-gap: 0.01%;
+  justify-self: center;
+  align-self: center;
 }
