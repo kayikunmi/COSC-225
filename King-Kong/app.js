@@ -12,9 +12,9 @@ shortButton.addEventListener("click", shortMaze);
 
 
 // Set up variables for the maze dimensions and cell size
-const MAZE_WIDTH = 30;
-const MAZE_HEIGHT = 30;
-const CELL_SIZE = 30;
+const MAZE_WIDTH = 20;
+const MAZE_HEIGHT = 20;
+const CELL_SIZE = 15;
 
 // Set up variables for the starting and ending cells
 // Set up variables for the starting and ending cells

@@ -1,102 +1,93 @@
-body {
-    margin: 0;
-    padding: 0;
-  }
-  
-  h1 {
-    text-align: center;
-    margin-top: 50px;
-  }
 
-  #buttonplace{
-    display: flex;
-    justify-content: center;
-  }
-  
-  #maze-container {
-    position: relative;
-    margin-left: 2%;
-    width: 50%;
-    height: 50%;
 
-  }
-  #maze-container2 {
-    position: relative;
-    margin-left: 95%;
-    width: 50%;
-    height: 50%;
+h1 {
+  text-align: center;
+  margin-top: 50px;
+}
 
-  }
-  
-  
-  .cell {
-    position: absolute;
-    background-color: white;
-    border: 1px solid black;
-  }
-  
-  button {
-    display: block;
-    margin-left: 2%;
-    margin-right: 5%;
-    margin-bottom: 2%;
-    padding: 10px 20px;
-    font-size: 18px;
-    border-radius: 5px;
-    border: none;
-    background-color: #4CAF50;
-    color: white;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #89c28b;
-  }
-  
-  button:active {
-    background-color: #134b21;
-  }
+#buttonplace{
+  display: flex;
+  justify-content: center;
+  position: static;
+}
 
-  .cell {
-    border: 1px solid black;
-    position: absolute;
-  }
-  
-  #instructions {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+#maze-container {
+  position: relative;
+  margin-left: 22%;
+  width: 50%;
+  height: 50%;
+}
 
-  .instruction-text {
-    text-align: center;
-    margin-top: 5px;
-  }
-  
-  .blocked {
-    background-color: rgb(114, 114, 114);
-  }
-  
-  .start {
-    background-color: rgb(95, 184, 123);
-  }
-  #start {
-    background-color: rgb(95, 184, 123);
-  }
-  
-  .end {
-    background-color: rgb(93, 136, 245);
-  }
-  #end {
-    background-color: rgb(93, 136, 245);
-  }
+#maze-container2 {
+  position: relative;
+  margin-left: 62%;
+  width: 50%;
+  height: 50%;
+}
 
-  .path{
-    background-color: rgb(87, 156, 152);
-  }
-  .unvisited{
-    background-color: rgb(240, 159, 163);
-  }
+.cell {
+  position: absolute;
+  background-color: white;
+  border: 1px solid black;
+}
+
+button {
+  display: block;
+  margin-left: 2%;
+  margin-right: 5%;
+  margin-bottom: 2%;
+  padding: 10px 20px;
+  font-size: 18px;
+  border-radius: 5px;
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #89c28b;
+}
+
+button:active {
+  background-color: #134b21;
+}
+
+.cell {
+  border: 1px solid black;
+  position: absolute;
+}
+
+#instructions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.instruction-text {
+  text-align: center;
+  margin-top: 5px;
+}
+
+.blocked {
+  background-color: rgb(114, 114, 114);
+}
+
+.start, #start {
+  background-color: rgb(95, 184, 123);
+}
+
+.end, #end {
+  background-color: rgb(93, 136, 245);
+}
+
+.path {
+  background-color: rgb(87, 156, 152);
+}
+
+.unvisited {
+  background-color: rgb(240, 159, 163);
+}
 
 .item1 { 
   text-indent: -2%;
@@ -128,9 +119,10 @@ body {
   grid-template-areas:
     'start end block path visit'
     'start end block path visit';
-  justify-items: center;
-  align-items: center;
+  justify-content: center;
+  align-content: center;
   margin-left: 5%;
   margin-right: 5%;
-  width: fit-content;
+  width: 100vw;
+  position: relative;
 }
