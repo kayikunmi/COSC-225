@@ -1,14 +1,19 @@
-h1 {
+body{
+  background-color: rgb(253, 239, 222);
+}
+
+h1{
   text-align: center;
   margin-top: 2%;
 }
+
 h2{
   text-align: center;
   margin-top: 2%;
 }
-h3 {
+
+h3{
   text-align: center;
-  /* margin-top: 50px; */
   margin-left: 10%;
   margin-right: 10%;
 }
@@ -19,129 +24,125 @@ h3 {
   position: static;
 }
 
-#maze-container {
+#maze-container{
   position: relative;
   margin-left: 15%;
-  /* width: 100%; */
-  /* height: 50%; */
 }
 
-#maze-container2 {
+#maze-container2{
   position: relative;
   margin-left: 55%;
-  /* width: 100%; */
-  /* height: 50%; */
 }
 
-.cell {
+.cell{
   position: absolute;
   background-color: white;
   border: 1px solid black;
 }
 
-button {
+button{
   display: block;
-  /* margin-left: 5%;
-  margin-right: 5%; */
-  margin-bottom: 10%;
+  margin-bottom: 12%;
   padding: 10px 20px;
   font-size: 18px;
   border-radius: 5px;
   border: none;
-  background-color: #4CAF50;
-  color: white;
+  background-color: rgb(204, 178, 231);
+  color: rgb(141, 89, 89);
   cursor: pointer;
 }
 
-button:hover {
-  background-color: #89c28b;
+button:hover{
+  background-color:rgb(225, 205, 246);
 }
 
-button:active {
-  background-color: #134b21;
+button:active{
+  background-color: rgb(131, 112, 150);
 }
 
-.cell {
+.cell{
   border: 1px solid black;
   position: absolute;
 }
 
-#instructions {
+#instructions{
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.instruction-text {
+.instruction-text{
   text-align: center;
   margin-top: 5px;
 }
 
-.blocked {
+.blocked{
   background-color: rgb(114, 114, 114);
 }
 
-.start, #start {
+.start, #start{
   background-color: rgb(95, 184, 123);
 }
 
-.end, #end {
+.end, #end{
   background-color: rgb(93, 136, 245);
 }
 
-.path {
+.path{
   background-color: rgb(87, 156, 152);
 }
 
-.unvisited {
+.unvisited{
   background-color: rgb(240, 159, 163);
 }
 
-.item1 { 
+.item1{ 
   text-indent: -2%;
   grid-area: start; 
 }
 
-.item2 { 
+.item2{ 
   text-indent: -1.7%;
   grid-area: end; 
 }
 
-.item3 { 
+.item3{ 
   text-indent: -6%;
   grid-area: block; 
 }
 
-.item4 { 
+.item4{ 
   text-indent: -2%;
   grid-area: path; 
 }
 
-.item5 { 
+.item5{ 
   text-indent: -9%;
   grid-area: visit; 
 }
 
-.button1 { 
+.button1{ 
   grid-area: button1; 
 }
-.button2 { 
+
+.button2{ 
   grid-area: button2; 
 }
 
-.button3 { 
+.button3{ 
   grid-area: button3; 
 }
 
-.space2 { 
+.space2{ 
   grid-area: space2; 
 }
-.space1 { 
+
+.space1{ 
   grid-area: space1; 
 }
 
 
-.grid-container {
+.grid-container{
   display: grid;
   grid-template-areas:
     'start end block path visit'
@@ -151,9 +152,6 @@ button:active {
   align-content: center;
   margin-left: 5%;
   margin-right: 5%;
-  /* margin-left: 5%;
-  margin-right: 5%;
-  /* width: 100vw; */
   position: relative;
   grid-gap: 0.01%;
   justify-self: center;
