@@ -5,17 +5,20 @@ body{
 h1{
   text-align: center;
   margin-top: 2%;
+  font-size: 400%;
 }
 
 h2{
   text-align: center;
   margin-top: 2%;
+  font-size: 200%;
 }
 
-h3{
+h4{
   text-align: center;
   margin-left: 10%;
   margin-right: 10%;
+  font-size: 100%;
 }
 
 #buttonplace{
@@ -141,6 +144,14 @@ button:active{
   grid-area: space1; 
 }
 
+#maze{
+ margin-bottom: 22%;
+}
+
+p{
+  margin-left: 8%;
+  margin-right: 8%;
+}
 
 .grid-container{
   display: grid;
@@ -152,6 +163,7 @@ button:active{
   align-content: center;
   margin-left: 5%;
   margin-right: 5%;
+  margin-top: 5%;
   position: relative;
   grid-gap: 0.01%;
   justify-self: center;

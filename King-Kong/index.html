@@ -9,14 +9,32 @@
   <body>
     <h1>Maze Generator</h1>
     <h2>By Kayikunmi and Kao</h2>
-    <h3>Click on the Generate Maze button to generate a Maze
+    <h4>Click on the Generate Maze button to generate a Maze
         Two identical mazes will be generated.
-    </h3>
-    <h3>The first one uses a depth first search algorithim 
+    </h4>
+    <h4>The first one uses a depth first search algorithim 
         to travel from the starting cell to the end cell. 
         The second maze on the right shows you what the shortest
         path from the start to the end cell.
-    </h3>
+    </h4>
+    <p>The DFS algorithm works by marking all cells as unvisited and 
+      initializing a stack with the starting cell. 
+      Then, while the stack is not empty and the maximum number of 
+      iterations has not been reached, the algorithm takes the last 
+      cell from the stack, marks it as visited, and checks its neighbors. 
+      If a neighbor is not blocked and has not been visited, it is added to the stack. 
+      The algorithm stops when the ending cell is marked as visited 
+      or when the stack is empty. If the ending cell is visited, 
+      the algorithm follows the path back to the starting cell and 
+      marks all cells on the path as part of the solution.
+    </p>
+    <p>
+      The "short" algorithm works similarly to the DFS algorithm, 
+      but it uses a queue instead of a stack, and it stops as soon as the 
+      ending cell is found, without marking all cells on the path. 
+      Therefore, this algorithm may not find the shortest path in all cases, 
+      but it is faster than the DFS algorithm.
+    </p>
 
     <div class="grid-container">
       <div class="item1">Start Cell
@@ -64,6 +82,7 @@
       </div>
     </div>
     
+    <br>
     <script src="app.js"></script>
   </body>
 </html>
